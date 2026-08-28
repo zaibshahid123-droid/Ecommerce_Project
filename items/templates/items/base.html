@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}ZS Resort & Fine Dining{% endblock %}</title>
+    
+    <!-- Google Fonts: Playfair Display, Cinzel & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Palette: 5-Star Luxury Resort */
+            --onyx: #0B0F10;
+            --onyx-card: #141B1E;
+            --onyx-light: #1E272B;
+            --bg: #FBF9F5;
+            --surface: #FFFFFF;
+            --surface-hover: #F8F5EE;
+            
+            --gold: #D4AF37;
+            --gold-light: #F4E7B8;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+            --gold-glow: rgba(212, 175, 55, 0.25);
+            --gold-dark: #A67C1E;
+            
+            --emerald: #1B4D3E;
+            --emerald-light: #E8F5EF;
+            --emerald-text: #116B4D;
+            
+            --ruby: #8B1E2D;
+            --ruby-light: #FDF0F2;
+            --ruby-text: #A72839;
+            
+            --text-main: #1C1917;
+            --text-muted: #685E53;
+            --text-light: #9C8E7F;
+            
+            --border: #E8DFD1;
+            --border-light: #F2ECE1;
+            
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            
+            --shadow-subtle: 0 2px 10px rgba(11, 15, 16, 0.04);
+            --shadow-card: 0 10px 30px rgba(11, 15, 16, 0.06);
+            --shadow-hover: 0 20px 40px rgba(11, 15, 16, 0.12);
+            --shadow-gold: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 600;
+            color: var(--onyx);
+            letter-spacing: -0.01em;
+        }
+
+        .font-brand {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        /* -------------------------------------------------------------
+           Header & Luxury Glass Navbar
+        ------------------------------------------------------------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 15, 16, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .brand-crest {
+            width: 42px;
+            height: 42px;
+            background: var(--gold-gradient);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--onyx);
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 20px;
+            box-shadow: var(--shadow-gold);
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+        }
+
+        .brand-logo:hover .brand-crest {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 0.12em;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: #E6DFD5;
+            position: relative;
+            padding: 6px 0;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold-gradient);
+            transition: width 0.25s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .role-chip {
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .user-greeting {
+            color: #E8DFD1;
+            font-size: 13.5px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Cart Link with Badge */
+        .cart-nav-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            padding: 8px 18px;
+            border-radius: var(--radius-full);
+            color: #FFFFFF;
+            font-size: 13.5px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .cart-nav-btn:hover {
+            background: var(--gold-gradient);
+            color: var(--onyx);
+            border-color: transparent;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .cart-badge-count {
+            background: var(--ruby);
+            color: #FFF;
+            font-size: 11px;
+            font-weight: 800;
+            min-width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 4px;
+            animation: pulse-badge 2s infinite;
+        }
+
+        @keyframes pulse-badge {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .nav-logout-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #D6CCC2;
+            padding: 7px 16px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-logout-btn:hover {
+            border-color: var(--ruby);
+            color: #FFF;
+            background: var(--ruby);
+        }
+
+        /* Mobile Hamburger */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #FFF;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* -------------------------------------------------------------
+           Signature Gold Border Accent Strip
+        ------------------------------------------------------------- */
+        .luxury-accent-strip {
+            height: 3px;
+            background: linear-gradient(90deg, #99751F 0%, #D4AF37 50%, #F5E5A4 75%, #99751F 100%);
+            box-shadow: 0 1px 8px rgba(212, 175, 55, 0.4);
+        }
+
+        /* -------------------------------------------------------------
+           Layout Container
+        ------------------------------------------------------------- */
+        .site-main {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px 80px;
+            min-height: calc(100vh - 400px);
+        }
+
+        /* -------------------------------------------------------------
+           Buttons & UI Controls
+        ------------------------------------------------------------- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 26px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: var(--onyx);
+            border-color: transparent;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(212, 175, 55, 0.4);
+            color: var(--onyx);
+        }
+
+        .btn-outline-gold {
+            background: transparent;
+            border: 1.5px solid var(--gold);
+            color: var(--gold-dark);
+        }
+
+        .btn-outline-gold:hover {
+            background: var(--gold-gradient);
+            color: var(--onyx);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .btn-dark {
+            background: var(--onyx);
+            color: #FFFFFF;
+            border-color: var(--onyx);
+        }
+
+        .btn-dark:hover {
+            background: var(--onyx-light);
+            transform: translateY(-2px);
+            color: #FFFFFF;
+        }
+
+        .btn-danger {
+            background: var(--ruby);
+            color: #FFFFFF;
+        }
+
+        .btn-danger:hover {
+            background: #6E1624;
+            transform: translateY(-2px);
+        }
+
+        .btn-subtle {
+            background: #EFECE6;
+            color: var(--text-main);
+        }
+
+        .btn-subtle:hover {
+            background: #E2DDD5;
+        }
+
+        /* -------------------------------------------------------------
+           Luxury Card Styling
+        ------------------------------------------------------------- */
+        .luxury-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .luxury-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* -------------------------------------------------------------
+           Status Badges & Pills
+        ------------------------------------------------------------- */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .status-Pending {
+            background: #FEF8E7;
+            color: #A67C1E;
+            border: 1px solid #F5DE9C;
+        }
+
+        .status-Processing {
+            background: var(--emerald-light);
+            color: var(--emerald-text);
+            border: 1px solid #B8E4D0;
+        }
+
+        .status-Shipped {
+            background: #EFF3FC;
+            color: #2D58A7;
+            border: 1px solid #C4D6F6;
+        }
+
+        .status-Delivered {
+            background: #EBF7EE;
+            color: #1A7436;
+            border: 1px solid #AEE0BB;
+        }
+
+        .status-Cancelled {
+            background: var(--ruby-light);
+            color: var(--ruby-text);
+            border: 1px solid #F8CCD2;
+        }
+
+        /* -------------------------------------------------------------
+           Flash Messages / Toasts
+        ------------------------------------------------------------- */
+        .toast-container {
+            max-width: 1280px;
+            margin: 20px auto 0;
+            padding: 0 24px;
+        }
+
+        .toast-msg {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #FFFFFF;
+            padding: 14px 20px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            border-left: 5px solid var(--gold);
+            box-shadow: var(--shadow-card);
+            font-size: 14px;
+            font-weight: 500;
+            animation: slideInDown 0.4s ease;
+        }
+
+        .toast-msg.success {
+            border-left-color: var(--emerald);
+            background: #F4FAF7;
+            color: #0F4232;
+        }
+
+        .toast-msg.error {
+            border-left-color: var(--ruby);
+            background: #FDF3F4;
+            color: #6C1521;
+        }
+
+        .toast-msg.warning {
+            border-left-color: #E29910;
+            background: #FFFBF2;
+            color: #794D05;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* -------------------------------------------------------------
+           Forms & Inputs
+        ------------------------------------------------------------- */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 16px;
+            background: #FFFFFF;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 14.5px;
+            font-family: inherit;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px var(--gold-glow);
+        }
+
+        .errorlist {
+            list-style: none;
+            color: var(--ruby-text);
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* -------------------------------------------------------------
+           Tables
+        ------------------------------------------------------------- */
+        .luxury-table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-sm);
+        }
+
+        table.luxury-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        table.luxury-table th {
+            background: #F4EFE6;
+            color: var(--text-muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table.luxury-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 14px;
+            color: var(--text-main);
+            background: #FFFFFF;
+        }
+
+        table.luxury-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.luxury-table tr:hover td {
+            background: var(--surface-hover);
+        }
+
+        /* -------------------------------------------------------------
+           5-Star Comprehensive Footer
+        ------------------------------------------------------------- */
+        .site-footer {
+            background: var(--onyx);
+            color: #ECE5DA;
+            padding: 80px 24px 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+            position: relative;
+        }
+
+        .footer-grid {
+            max-width: 1280px;
+            margin: 0 auto 60px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 48px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Cinzel', serif;
+            color: #FFFFFF;
+            font-size: 22px;
+            letter-spacing: 0.1em;
+            margin-bottom: 14px;
+        }
+
+        .footer-brand p {
+            color: #A89C8F;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 0.12em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            color: #B8ADA0;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+            padding-left: 4px;
+        }
+
+        .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 14px;
+            color: #B8ADA0;
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 13px;
+            color: #8C8072;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--gold);
+        }
+
+        /* -------------------------------------------------------------
+           Scroll Reveal Animation
+        ------------------------------------------------------------- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* -------------------------------------------------------------
+           Responsive Media Queries
+        ------------------------------------------------------------- */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--onyx);
+                flex-direction: column;
+                padding: 24px;
+                gap: 18px;
+                border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            }
+            .main-nav.active {
+                display: flex;
+            }
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+            .site-main {
+                padding: 20px 16px 60px;
+            }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+    <div class="header-container">
+        <!-- Logo -->
+        <a href="{% url 'item_list' %}" class="brand-logo">
+            <div class="brand-crest">ZS</div>
+            <div class="brand-text">
+                <span class="brand-title">ZS RESORT</span>
+                <span class="brand-subtitle">Fine Dining & Villas</span>
+            </div>
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+
+        <!-- Navigation -->
+        <nav class="main-nav" id="mainNav">
+            <a href="{% url 'item_list' %}" class="nav-link">Menu & Experiences</a>
+            <a href="{% url 'reserve_table' %}" class="nav-link" style="color:var(--gold);">✦ Book a Table</a>
+            <a href="{% url 'item_list' %}?deals=1" class="nav-link">Chef's Offers</a>
+            
+            {% if user.is_authenticated %}
+                {% if user.profile.role == 'customer' %}
+                    <a href="{% url 'my_reservations' %}" class="nav-link">My Bookings</a>
+                    <a href="{% url 'order_history' %}" class="nav-link">My Orders</a>
+                {% else %}
+                    <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                    <a href="{% url 'manage_reservations' %}" class="nav-link">Reservations</a>
+                    <a href="{% url 'order_management' %}" class="nav-link">Manage Orders</a>
+                {% endif %}
+                
+                <!-- Cart Button -->
+                <a href="{% url 'cart_view' %}" class="cart-nav-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Cart</span>
+                    {% if cart_count %}
+                        <span class="cart-badge-count">{{ cart_count }}</span>
+                    {% endif %}
+                </a>
+
+                <span class="role-chip">{{ user.profile.role }}</span>
+                <span class="user-greeting">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    {{ user.username }}
+                </span>
+
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-logout-btn">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'cart_view' %}" class="cart-nav-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span>Cart</span>
+                </a>
+                <a href="{% url 'login' %}" class="nav-link">Log In</a>
+                <a href="{% url 'signup' %}" class="btn btn-gold" style="padding:8px 20px; font-size:13px;">Sign Up</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+<div class="luxury-accent-strip"></div>
+
+<!-- Toast Messages -->
+{% if messages %}
+<div class="toast-container">
+    {% for message in messages %}
+        <div class="toast-msg {% if message.tags %}{{ message.tags }}{% endif %}">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>{{ message }}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" style="background:none; border:none; color:inherit; cursor:pointer; font-size:18px; line-height:1;">&times;</button>
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Main Content Area -->
+<main class="site-main">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>ZS RESORT & FINE DINING</h3>
+            <p>An exceptional sanctuary celebrating the art of slow-cooked Pakistani & Mughlai culinary heritage. From heritage clay tandoors to royal gazebo dining, we craft memorable dining experiences for discerning palates.</p>
+            <div style="display:flex; gap:12px;">
+                <span class="role-chip" style="border-color:rgba(212,175,55,0.4); color:var(--gold);">★ 5-Star Certified</span>
+                <span class="role-chip" style="border-color:rgba(212,175,55,0.4); color:var(--gold);">100% Halal Gourmet</span>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Experiences</h4>
+            <ul>
+                <li><a href="{% url 'item_list' %}">Today's Menu</a></li>
+                <li><a href="{% url 'item_list' %}?deals=1">Chef's Special Offers</a></li>
+                <li><a href="{% url 'item_list' %}#story">Resort Culinary Story</a></li>
+                <li><a href="{% url 'item_list' %}#reviews">Guest Reviews</a></li>
+                <li><a href="{% url 'item_list' %}#faq">Dining & Delivery FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="{% url 'reserve_table' %}" style="color:var(--gold);">✦ Book a Table</a></li>
+                {% if user.is_authenticated %}
+                    {% if user.profile.role == 'customer' %}
+                        <li><a href="{% url 'my_reservations' %}">My Table Bookings</a></li>
+                        <li><a href="{% url 'order_history' %}">My Order History</a></li>
+                    {% else %}
+                        <li><a href="{% url 'dashboard' %}">Staff Dashboard</a></li>
+                        <li><a href="{% url 'manage_reservations' %}">Manage Reservations</a></li>
+                        <li><a href="{% url 'order_management' %}">Order Management</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'cart_view' %}">My Cart</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Guest Login</a></li>
+                    <li><a href="{% url 'signup' %}">Create Account</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Dining Concierge</h4>
+            <div class="footer-contact-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0;">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>ZS Resort Avenue, Grand Marina Valley, PK</span>
+            </div>
+            <div class="footer-contact-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0;">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                <span>+92 300 1234567 / Concierge Desk</span>
+            </div>
+            <div class="footer-contact-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="flex-shrink:0;">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Dining Hours: 11:00 AM – 1:00 AM (Daily)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div>&copy; 2026 ZS Resort & Fine Dining. Handcrafted with pride. All rights reserved.</div>
+        <div class="footer-bottom-links">
+            <a href="#">Privacy Notice</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Dietary & Allergy Guide</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Intersection Observer & Mobile Nav Script -->
+<script>
+    // Mobile navigation toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+    if (mobileBtn && mainNav) {
+        mobileBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+    }
+
+    // Scroll Reveal animations
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    } else {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,521 @@
+{% extends 'items/base.html' %}
+{% block title %}Fine Dining & Menus — ZS Resort{% endblock %}
+
+{% block content %}
+<!-- -------------------------------------------------------------
+     1. Cinematic Luxury Hero Section
+------------------------------------------------------------- -->
+<section class="hero-section reveal" style="background: radial-gradient(circle at 50% 30%, #1A2428 0%, #0B0F10 100%); color: #FFF; margin: -32px -24px 48px; padding: 96px 24px 80px; text-align: center; position: relative; overflow: hidden; border-bottom: 1px solid rgba(212, 175, 55, 0.2);">
+    <!-- Decorative Ambient Glows -->
+    <div style="position:absolute; top:-20%; left:50%; transform:translateX(-50%); width:600px; height:350px; background:radial-gradient(ellipse, rgba(212,175,55,0.15), transparent 70%); pointer-events:none;"></div>
+    
+    <div style="max-width: 860px; margin: 0 auto; position: relative; z-index: 2;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.4); padding:6px 18px; border-radius:var(--radius-full); margin-bottom:24px;">
+            <span style="color:var(--gold); font-size:12px;">★ ★ ★ ★ ★</span>
+            <span style="color:var(--gold-light); font-size:11.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase;">The Grand Culinary Sanctuary</span>
+        </div>
+        
+        <h1 style="font-size: clamp(38px, 6vw, 62px); line-height: 1.15; color: #FFFFFF; margin-bottom: 22px; font-weight: 700;">
+            An Unrivaled Gastronomic Escape
+        </h1>
+        
+        <p style="color: #D6CCC2; font-size: clamp(15px, 2vw, 18px); line-height: 1.8; margin: 0 auto 36px; max-width: 720px; font-weight: 300;">
+            Immerse yourself in authentic royal recipes, live wood-fired tandoor creations, and slow-simmered heritage karahis. Prepared with organic spices and delivered to your private table or luxury villa.
+        </p>
+
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px;">
+            <a href="#menu-catalog" class="btn btn-gold" style="padding: 14px 34px; font-size: 15px;">
+                Explore Dining Menu ↓
+            </a>
+            <a href="?deals=1#menu-catalog" class="btn btn-outline-gold" style="padding: 14px 30px; font-size: 15px; background:rgba(212,175,55,0.05);">
+                Chef's Special Offers ({{ deals_count }})
+            </a>
+        </div>
+
+        <!-- Quick Stats Bar -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; padding-top: 36px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <div>
+                <div style="font-family:'Cinzel',serif; font-size:26px; color:var(--gold); font-weight:700;">4.9 / 5.0</div>
+                <div style="color:#A89C8F; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;">Verified Guest Rating</div>
+            </div>
+            <div>
+                <div style="font-family:'Cinzel',serif; font-size:26px; color:var(--gold); font-weight:700;">100% Halal</div>
+                <div style="color:#A89C8F; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;">Organic & Handcrafted</div>
+            </div>
+            <div>
+                <div style="font-family:'Cinzel',serif; font-size:26px; color:var(--gold); font-weight:700;">24/7 Service</div>
+                <div style="color:#A89C8F; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;">Villa & Suite Delivery</div>
+            </div>
+            <div>
+                <div style="font-family:'Cinzel',serif; font-size:26px; color:var(--gold); font-weight:700;">35+ Chefs</div>
+                <div style="color:#A89C8F; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; margin-top:2px;">Heritage Masters</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- -------------------------------------------------------------
+     2. Resort Experience Pillars (New Section)
+------------------------------------------------------------- -->
+<section class="reveal" style="margin-bottom: 56px;">
+    <div style="text-align: center; max-width: 600px; margin: 0 auto 36px;">
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Why Dine at ZS</span>
+        <h2 style="font-size: 32px; margin-top: 6px;">The 5-Star Experience</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+        <!-- Card 1 -->
+        <div class="luxury-card" style="padding: 28px 24px; text-align: center; border-top: 3px solid var(--gold);">
+            <div style="width: 56px; height: 56px; background: rgba(212,175,55,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; color: var(--gold-dark);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+            </div>
+            <h3 style="font-size: 19px; margin-bottom: 10px;">Artisan Tandoor & Karahi</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">Smoked over natural charcoal in custom clay ovens for irreplaceable aroma and deep flavor.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="luxury-card" style="padding: 28px 24px; text-align: center; border-top: 3px solid var(--gold);">
+            <div style="width: 56px; height: 56px; background: rgba(212,175,55,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; color: var(--gold-dark);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+            </div>
+            <h3 style="font-size: 19px; margin-bottom: 10px;">Private Dining & Gazebos</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">Scenic poolside gazebos and private luxury banquets for your personal celebrations.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="luxury-card" style="padding: 28px 24px; text-align: center; border-top: 3px solid var(--gold);">
+            <div style="width: 56px; height: 56px; background: rgba(212,175,55,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; color: var(--gold-dark);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+            </div>
+            <h3 style="font-size: 19px; margin-bottom: 10px;">Express In-Villa Delivery</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">Delivered hot and fresh directly to your resort villa, suite, or residential suite in temperature-locked cases.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="luxury-card" style="padding: 28px 24px; text-align: center; border-top: 3px solid var(--gold);">
+            <div style="width: 56px; height: 56px; background: rgba(212,175,55,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; color: var(--gold-dark);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+            </div>
+            <h3 style="font-size: 19px; margin-bottom: 10px;">VIP Table Concierge</h3>
+            <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6;">Dedicated butler service and customized banquet preparations for every reservation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- -------------------------------------------------------------
+     3. Special Offers Banner Spotlight (New Section)
+------------------------------------------------------------- -->
+{% if deals_count > 0 %}
+<section class="reveal" style="background: linear-gradient(135deg, #1C4336 0%, #0F271F 100%); color: #FFF; border-radius: var(--radius-md); padding: 36px 32px; margin-bottom: 48px; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: var(--shadow-card); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px;">
+    <div style="max-width: 600px;">
+        <span style="background: var(--gold-gradient); color: var(--onyx); font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.1em; display: inline-block; margin-bottom: 10px;">
+            Limited Time Chef's Special
+        </span>
+        <h3 style="color: #FFFFFF; font-size: 26px; margin-bottom: 8px;">Exclusive Dining Discounts Up to 50% Off</h3>
+        <p style="color: #C2E2D4; font-size: 14.5px; line-height: 1.6; margin: 0;">
+            Enjoy our master chef's signature preparations at exclusive discount pricing. Available for a limited time for both in-room dining and resort table guests.
+        </p>
+    </div>
+    <div>
+        <a href="?deals=1#menu-catalog" class="btn btn-gold" style="padding: 12px 28px; font-size: 14.5px;">
+            View {{ deals_count }} Special Deal{{ deals_count|pluralize }} →
+        </a>
+    </div>
+</section>
+{% endif %}
+
+<!-- -------------------------------------------------------------
+     4. Main Menu Catalog Section
+------------------------------------------------------------- -->
+<div id="menu-catalog"></div>
+
+<section class="reveal" style="margin-bottom: 64px;">
+    <!-- Catalog Header & Search Controls -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px; margin-bottom: 28px;">
+        <div>
+            <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Curated Selections</span>
+            <h2 style="font-size: 34px; margin: 4px 0 6px;">
+                {% if deals_only %}Chef's Special Offers{% else %}Today's Fine Dining Menu{% endif %}
+            </h2>
+            <p style="color: var(--text-muted); font-size: 14.5px; margin: 0;">
+                Showing <strong>{{ items|length }}</strong> handcrafted dish{{ items|length|pluralize:"es" }}
+                {% if query %} matching "<span style="color:var(--gold-dark);">{{ query }}</span>"{% endif %}
+            </p>
+        </div>
+
+        {% if user.is_authenticated and user.profile.role in "owner,employee" %}
+        <div>
+            <a class="btn btn-gold" href="{% url 'item_create' %}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Add New Dish</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="luxury-card" style="padding: 20px 24px; margin-bottom: 32px;">
+        <form method="get" action="{% url 'item_list' %}#menu-catalog" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <div style="position: relative; flex: 1; min-width: 260px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-light)" stroke-width="2" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); pointer-events: none;">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" name="q" placeholder="Search by dish name, flavor, or ingredient..." value="{{ query }}"
+                       style="width: 100%; padding: 12px 14px 12px 42px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14.5px;">
+            </div>
+
+            {% if deals_only %}
+                <input type="hidden" name="deals" value="1">
+            {% endif %}
+            {% if active_category %}
+                <input type="hidden" name="category" value="{{ active_category }}">
+            {% endif %}
+
+            <button class="btn btn-dark" type="submit" style="padding: 12px 24px;">Search Menu</button>
+
+            {% if query or deals_only or active_category %}
+                <a class="btn btn-subtle" href="{% url 'item_list' %}#menu-catalog">Clear Filters</a>
+            {% endif %}
+        </form>
+
+        <!-- Category Filter Tabs -->
+        <div style="display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; border-top: 1px solid var(--border-light); padding-top: 16px;">
+            <a href="{% url 'item_list' %}{% if query %}?q={{ query }}{% endif %}#menu-catalog" 
+               class="btn {% if not active_category and not deals_only %}btn-dark{% else %}btn-subtle{% endif %}" 
+               style="padding: 6px 16px; font-size: 12.5px; border-radius: var(--radius-full);">
+                All Dishes
+            </a>
+            
+            <a href="?deals=1{% if query %}&q={{ query }}{% endif %}#menu-catalog" 
+               class="btn {% if deals_only %}btn-gold{% else %}btn-subtle{% endif %}" 
+               style="padding: 6px 16px; font-size: 12.5px; border-radius: var(--radius-full);">
+                🔥 Chef's Deals {% if deals_count %}({{ deals_count }}){% endif %}
+            </a>
+
+            {% for cat in categories %}
+            <a href="?category={{ cat|urlencode }}{% if query %}&q={{ query }}{% endif %}#menu-catalog" 
+               class="btn {% if active_category == cat %}btn-dark{% else %}btn-subtle{% endif %}" 
+               style="padding: 6px 16px; font-size: 12.5px; border-radius: var(--radius-full); {% if active_category == cat %}border-color:var(--gold); color:var(--gold);{% endif %}">
+                {{ cat }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 5-Star Menu Cards Grid -->
+    {% if items %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(285px, 1fr)); gap: 28px;">
+        {% for item in items %}
+        <div class="luxury-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column; height: 100%; position: relative;">
+            
+            <!-- Dish Image Container -->
+            <div style="position: relative; width: 100%; aspect-ratio: 16/11; background: #EDE6D8; overflow: hidden;">
+                {% if item.image %}
+                    <img src="{% url 'item_image' item.id %}" alt="{{ item.name }}"
+                         style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;"
+                         onmouseover="this.style.transform='scale(1.06)';"
+                         onmouseout="this.style.transform='scale(1)';"
+                         loading="lazy">
+                {% else %}
+                    <!-- Luxury Monogram Placeholder -->
+                    <div style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, #253338 0%, #121A1D 100%); color: #C59B27;">
+                        <span style="font-family:'Cinzel',serif; font-size: 38px; font-weight: 700; opacity: 0.7;">ZS</span>
+                        <span style="font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: #A89C8F; margin-top: 4px;">Chef's Special Selection</span>
+                    </div>
+                {% endif %}
+
+                <!-- Badges over Image -->
+                <div style="position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2;">
+                    {% if item.is_on_sale %}
+                        <span style="background: var(--ruby); color: #FFF; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: var(--radius-sm); letter-spacing: 0.04em; box-shadow: 0 4px 10px rgba(139,30,45,0.4);">
+                            SAVE {{ item.discount_percent|floatformat:0 }}%
+                        </span>
+                    {% endif %}
+                </div>
+
+                <div style="position: absolute; top: 12px; right: 12px; z-index: 2;">
+                    {% if item.quantity > 0 %}
+                        {% if item.quantity <= 5 %}
+                            <span style="background: rgba(11,15,16,0.85); backdrop-filter:blur(4px); color: #FFAA33; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-full); border: 1px solid rgba(255,170,51,0.5);">
+                                Only {{ item.quantity }} left
+                            </span>
+                        {% else %}
+                            <span style="background: rgba(11,15,16,0.85); backdrop-filter:blur(4px); color: #4ADE80; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-full); border: 1px solid rgba(74,222,128,0.4);">
+                                In Stock
+                            </span>
+                        {% endif %}
+                    {% else %}
+                        <span style="background: rgba(139,30,45,0.9); color: #FFF; font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-full);">
+                            Sold Out
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div style="padding: 22px; display: flex; flex-direction: column; flex: 1;">
+                <!-- Category, Rating & Origin Tag -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 4px;">
+                    <span style="font-size: 10.5px; font-weight: 700; color: var(--gold-dark); background: rgba(212,175,55,0.1); padding: 2px 8px; border-radius: var(--radius-full); text-transform: uppercase; letter-spacing: 0.04em;">
+                        {{ item.category|default:"Signature Mains" }}
+                    </span>
+                    <div style="display: flex; align-items: center; gap: 4px; color: var(--gold-dark); font-size: 12px; font-weight: 700;">
+                        <span>★ 4.9</span>
+                        <span style="color: var(--text-light); font-weight: 400; font-size: 11px;">(120+)</span>
+                    </div>
+                </div>
+
+                <!-- Dish Title -->
+                <h3 style="font-size: 20px; line-height: 1.3; margin-bottom: 8px;">
+                    {{ item.name }}
+                </h3>
+
+                <!-- Description -->
+                <p style="color: var(--text-muted); font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; flex: 1;">
+                    {{ item.description|default:"Slow-cooked with proprietary blend of fragrant whole spices and pure desi ghee, served steaming hot." }}
+                </p>
+
+                <!-- Price Row -->
+                <div style="display: flex; align-items: baseline; justify-content: space-between; padding-top: 14px; border-top: 1px dashed var(--border); margin-bottom: 16px;">
+                    <div>
+                        {% if item.is_on_sale %}
+                            <span style="text-decoration: line-through; color: var(--text-light); font-size: 14px; margin-right: 6px;">${{ item.price }}</span>
+                            <span style="font-size: 22px; font-weight: 800; color: var(--ruby-text); font-family: 'Plus Jakarta Sans', sans-serif;">${{ item.discounted_price }}</span>
+                        {% else %}
+                            <span style="font-size: 22px; font-weight: 800; color: var(--onyx); font-family: 'Plus Jakarta Sans', sans-serif;">${{ item.price }}</span>
+                        {% endif %}
+                    </div>
+
+                    {% if item.is_on_sale %}
+                        <span style="font-size: 12px; color: var(--emerald-text); font-weight: 600;">
+                            Save ${{ item.savings_amount }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                <!-- Action Button / Form -->
+                {% if user.is_authenticated %}
+                    {% if item.quantity > 0 %}
+                    <form method="post" action="{% url 'add_to_cart' item.id %}" style="display: flex; gap: 8px;">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                        <input type="number" name="quantity" value="1" min="1" max="{{ item.quantity }}"
+                               style="width: 68px; padding: 10px 8px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; text-align: center;">
+                        <button class="btn btn-gold" type="submit" style="flex: 1; padding: 11px 16px; font-size: 13.5px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                            <span>Add to Order</span>
+                        </button>
+                    </form>
+                    {% else %}
+                        <button class="btn" style="width: 100%; background: #E8DFD1; color: #8A7B6C; cursor: not-allowed;" disabled>
+                            Currently Out of Stock
+                        </button>
+                    {% endif %}
+                {% else %}
+                    <a class="btn btn-outline-gold" style="width: 100%; font-size: 13.5px; text-align: center;" href="{% url 'login' %}?next={% url 'item_list' %}">
+                        Sign in to Order
+                    </a>
+                {% endif %}
+
+                <!-- Staff Controls -->
+                {% if user.is_authenticated and user.profile.role in "owner,employee" %}
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-light); font-size: 12.5px;">
+                    <a href="{% url 'item_update' item.id %}" style="color: var(--gold-dark); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        Edit Dish
+                    </a>
+                    {% if user.profile.role == "owner" %}
+                    <a href="{% url 'item_delete' item.id %}" style="color: var(--ruby-text); font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        Delete
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="luxury-card" style="text-align: center; padding: 64px 20px;">
+        <div style="font-size: 42px; margin-bottom: 16px;">🍽️</div>
+        <h3 style="font-size: 24px; margin-bottom: 8px;">No dishes match your query</h3>
+        <p style="color: var(--text-muted); max-width: 480px; margin: 0 auto 24px;">We couldn't find any dishes matching your search terms. Try exploring our complete signature menu.</p>
+        <a href="{% url 'item_list' %}#menu-catalog" class="btn btn-gold">View Full Menu</a>
+    </div>
+    {% endif %}
+</section>
+
+<!-- -------------------------------------------------------------
+     5. Master Chef & Resort Heritage Story (New Section)
+------------------------------------------------------------- -->
+<section id="story" class="reveal" style="margin-bottom: 80px; background: #FFFFFF; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); align-items: center;">
+        <div style="padding: clamp(32px, 5vw, 64px);">
+            <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Heritage & Passion</span>
+            <h2 style="font-size: clamp(28px, 4vw, 40px); margin: 8px 0 18px; line-height: 1.2;">
+                The Art of Slow-Simmered Luxury
+            </h2>
+            <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 20px;">
+                At ZS Resort, we treat culinary hospitality as a timeless fine art. Our master chefs spend hours hand-grinding fresh spices, slow-cooking organic meats in heavy iron woks, and kneading heirloom doughs for our live tandoor ovens.
+            </p>
+            <p style="color: var(--text-muted); font-size: 15px; line-height: 1.8; margin-bottom: 28px;">
+                Whether you dine under the stars in our VIP poolside gazebos or order in-room villa banquet service, every dish arrives infused with authentic warmth and royal heritage.
+            </p>
+            <div style="display: flex; gap: 28px; flex-wrap: wrap;">
+                <div>
+                    <div style="font-family:'Cinzel',serif; font-size:24px; color:var(--onyx); font-weight:700;">100% Fresh</div>
+                    <div style="color:var(--text-light); font-size:12px;">Desi Ghee & Farm Spices</div>
+                </div>
+                <div>
+                    <div style="font-family:'Cinzel',serif; font-size:24px; color:var(--onyx); font-weight:700;">Artisan Baked</div>
+                    <div style="color:var(--text-light); font-size:12px;">Fresh Clay Tandoors</div>
+                </div>
+                <div>
+                    <div style="font-family:'Cinzel',serif; font-size:24px; color:var(--onyx); font-weight:700;">Master Certified</div>
+                    <div style="color:var(--text-light); font-size:12px;">Executive Kitchen Staff</div>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: radial-gradient(circle, #1F2A2E 0%, #0B0F10 100%); padding: 48px; min-height: 380px; display: flex; flex-direction: column; justify-content: center; color: #FFF; position: relative;">
+            <div style="border: 2px solid rgba(212, 175, 55, 0.4); border-radius: var(--radius-md); padding: 32px; position: relative;">
+                <div style="font-size: 36px; color: var(--gold); font-family: 'Playfair Display', serif; line-height: 1; margin-bottom: 14px;">“</div>
+                <p style="font-family: 'Playfair Display', serif; font-size: 19px; line-height: 1.6; font-style: italic; color: #F5EFE6; margin-bottom: 20px;">
+                    True hospitality is not just serving great food; it is creating an unhurried sanctuary where every single guest feels like royalty.
+                </p>
+                <div style="font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold); letter-spacing: 0.1em; font-weight: 700;">
+                    CHEF Z. SHAHID
+                </div>
+                <div style="font-size: 12px; color: #A89C8F; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px;">
+                    Executive Culinary Director, ZS Resort
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- -------------------------------------------------------------
+     6. Guest Testimonials & Reviews (New Section)
+------------------------------------------------------------- -->
+<section id="reviews" class="reveal" style="margin-bottom: 80px;">
+    <div style="text-align: center; max-width: 620px; margin: 0 auto 40px;">
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Guest Accolades</span>
+        <h2 style="font-size: 34px; margin-top: 6px;">Stories of Unforgettable Dinners</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <!-- Review 1 -->
+        <div class="luxury-card" style="padding: 32px 28px;">
+            <div style="color: var(--gold); font-size: 16px; margin-bottom: 12px;">★ ★ ★ ★ ★</div>
+            <p style="font-size: 15px; line-height: 1.7; color: var(--text-main); font-style: italic; margin-bottom: 20px;">
+                "The mutton karahi and garlic naan delivered to our resort villa were nothing short of sublime. Hot, fragrant, and impeccably seasoned. 5-star service all the way!"
+            </p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 42px; height: 42px; background: #E8DFD1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--onyx);">
+                    AK
+                </div>
+                <div>
+                    <div style="font-weight: 700; font-size: 14.5px;">Ahmed Khan</div>
+                    <div style="color: var(--text-light); font-size: 12px;">Presidential Suite Guest</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="luxury-card" style="padding: 32px 28px;">
+            <div style="color: var(--gold); font-size: 16px; margin-bottom: 12px;">★ ★ ★ ★ ★</div>
+            <p style="font-size: 15px; line-height: 1.7; color: var(--text-main); font-style: italic; margin-bottom: 20px;">
+                "Ordering online was seamless, and the special chef deals made it fantastic value for our family banquet. We will definitely be reserving another weekend here."
+            </p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 42px; height: 42px; background: #E8DFD1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--onyx);">
+                    SF
+                </div>
+                <div>
+                    <div style="font-weight: 700; font-size: 14.5px;">Sarah Fatima</div>
+                    <div style="color: var(--text-light); font-size: 12px;">Private Gazebo Dining</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="luxury-card" style="padding: 32px 28px;">
+            <div style="color: var(--gold); font-size: 16px; margin-bottom: 12px;">★ ★ ★ ★ ★</div>
+            <p style="font-size: 15px; line-height: 1.7; color: var(--text-main); font-style: italic; margin-bottom: 20px;">
+                "The finest clay-oven tandoor barbecue I've experienced in years. The spices are layered with elegance without overwhelming the natural flavors."
+            </p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="width: 42px; height: 42px; background: #E8DFD1; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--onyx);">
+                    MT
+                </div>
+                <div>
+                    <div style="font-weight: 700; font-size: 14.5px;">Malik Tariq</div>
+                    <div style="color: var(--text-light); font-size: 12px;">Resort Resident</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- -------------------------------------------------------------
+     7. Dining & Delivery FAQ (New Section)
+------------------------------------------------------------- -->
+<section id="faq" class="reveal" style="margin-bottom: 40px;">
+    <div style="text-align: center; max-width: 620px; margin: 0 auto 36px;">
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Concierge Assistance</span>
+        <h2 style="font-size: 34px; margin-top: 6px;">Frequently Asked Questions</h2>
+    </div>
+
+    <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px;">
+        <details class="luxury-card" style="padding: 20px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 16px; color: var(--onyx); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                <span>How fast does in-villa resort delivery take?</span>
+                <span style="color: var(--gold); font-size: 20px;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.7; margin-top: 14px;">
+                All dishes are prepared fresh to order in our central resort kitchen. Average preparation and delivery to your villa or table takes between 25 to 40 minutes in temperature-preserving hot cases.
+            </p>
+        </details>
+
+        <details class="luxury-card" style="padding: 20px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 16px; color: var(--onyx); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                <span>Can we customize spice levels or request gluten-free options?</span>
+                <span style="color: var(--gold); font-size: 20px;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.7; margin-top: 14px;">
+                Yes! You can specify your desired heat profile (Mild, Medium, Royal Spice) or dietary requirements directly during checkout or by mentioning it to the dining concierge.
+            </p>
+        </details>
+
+        <details class="luxury-card" style="padding: 20px 24px; cursor: pointer;">
+            <summary style="font-weight: 700; font-size: 16px; color: var(--onyx); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                <span>What payment methods are supported?</span>
+                <span style="color: var(--gold); font-size: 20px;">+</span>
+            </summary>
+            <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.7; margin-top: 14px;">
+                We support both Cash on Delivery (COD) upon receiving your order and Credit / Debit Card billing at checkout or room-charge for resort guests.
+            </p>
+        </details>
+    </div>
+</section>
+{% endblock %}

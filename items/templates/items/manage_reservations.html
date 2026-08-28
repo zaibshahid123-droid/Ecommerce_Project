@@ -1,0 +1,108 @@
+{% extends 'items/base.html' %}
+{% block title %}Manage Dining & Gazebo Reservations — ZS Resort Staff{% endblock %}
+
+{% block content %}
+<div class="reveal" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Staff Command Center</span>
+        <h1 style="font-size: 34px; margin: 4px 0 6px;">Table & Gazebo Reservations</h1>
+        <p style="color: var(--text-muted); font-size: 14.5px;">Manage table allocations, VIP gazebo requests, and guest attendance.</p>
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+        <a href="{% url 'dashboard' %}" class="btn btn-subtle">
+            ← Dashboard
+        </a>
+        <a href="{% url 'order_management' %}" class="btn btn-dark">
+            Order Dispatch
+        </a>
+    </div>
+</div>
+
+<!-- Status Filter Tabs -->
+<div class="reveal" style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+    <a class="btn {% if not status_filter %}btn-dark{% else %}btn-subtle{% endif %}" href="{% url 'manage_reservations' %}" style="padding: 8px 20px; font-size: 13px; border-radius: var(--radius-full);">
+        All Bookings
+    </a>
+    {% for s in statuses %}
+        <a class="btn {% if status_filter == s %}btn-gold{% else %}btn-subtle{% endif %}" href="?status={{ s }}" style="padding: 8px 18px; font-size: 13px; border-radius: var(--radius-full);">
+            {{ s }}
+        </a>
+    {% endfor %}
+</div>
+
+{% if reservations %}
+<div class="luxury-card reveal" style="padding: 24px;">
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Ref #</th>
+                    <th>Date & Time Slot</th>
+                    <th>Seating Type</th>
+                    <th>Party Size</th>
+                    <th>Guest Information</th>
+                    <th>Current Status</th>
+                    <th style="text-align:right;">Staff Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in reservations %}
+                <tr>
+                    <td>
+                        <strong style="color: var(--onyx); font-family: 'Cinzel', serif;">#{{ r.id }}</strong>
+                        <div style="font-size: 11.5px; color: var(--text-light);">{{ r.created_at|date:"M j, Y, g:i A" }}</div>
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: var(--onyx);">{{ r.reservation_date }}</div>
+                        <div style="font-size: 12px; color: var(--gold-dark); font-weight: 600;">{{ r.time_slot }}</div>
+                    </td>
+                    <td>
+                        <strong style="color: var(--onyx); font-size: 13.5px;">{{ r.table_type }}</strong>
+                        {% if r.special_requests %}
+                            <div style="font-size: 11.5px; color: var(--text-light); max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ r.special_requests }}">
+                                💬 {{ r.special_requests }}
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span style="font-weight: 800; font-size: 15px; color: var(--onyx);">{{ r.guest_count }}</span>
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: var(--onyx);">{{ r.guest_name }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">📞 {{ r.guest_phone }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">✉️ {{ r.guest_email }}</div>
+                    </td>
+                    <td>
+                        <span class="status-pill status-{{ r.status }}">
+                            ● {{ r.status }}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <form method="post" action="{% url 'update_reservation_status' r.id %}" style="display: inline-flex; gap: 6px; align-items: center; justify-content: flex-end;">
+                            {% csrf_token %}
+                            <select name="status" style="padding: 6px 10px; font-size: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                                {% for choice in statuses %}
+                                    <option value="{{ choice }}" {% if choice == r.status %}selected{% endif %}>{{ choice }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-gold" style="padding: 6px 12px; font-size: 12px;">Save</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="luxury-card reveal" style="text-align: center; padding: 64px 20px; max-width: 520px; margin: 40px auto;">
+    <div style="font-size: 38px; margin-bottom: 14px;">🏛️</div>
+    <h3 style="font-size: 22px; margin-bottom: 6px;">No Reservations Found</h3>
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">
+        There are currently no active bookings matching this filter.
+    </p>
+    <a href="{% url 'manage_reservations' %}" class="btn btn-subtle">View All Bookings</a>
+</div>
+{% endif %}
+{% endblock %}
