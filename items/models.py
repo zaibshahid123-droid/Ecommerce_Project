@@ -74,6 +74,7 @@ class Profile(models.Model):
         ('customer', 'Customer'),
     ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    date_of_birth = models.DateField(null=True, blank=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='customer')
     # Customers get is_approved=True explicitly at signup; staff default to False
     # here so a new owner/employee profile always needs a deliberate approval step.

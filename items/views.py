@@ -134,11 +134,16 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             account_type = form.cleaned_data['account_type']
-            profile = user.profile
+            dob = form.cleaned_data.get('date_of_birth')  # Grab DOB from cleaned_data
+
+            # Access or create the linked profile
+            profile, created = Profile.objects.get_or_create(user=user)
             profile.role = account_type
             profile.is_approved = (account_type == 'customer')
+            profile.date_of_birth = dob  # Save Date of Birth
             profile.save()
-            login(request, user)
+
+            login(request, user,backend='items.backends.EmailBackend')
             if account_type == 'customer':
                 messages.success(request, 'Welcome! Your account is ready — start shopping.')
                 return redirect('item_list')
@@ -147,7 +152,6 @@ def signup_view(request):
     else:
         form = SignupForm()
     return render(request, 'items/signup.html', {'form': form})
-
 
 def logout_view(request):
     logout(request)

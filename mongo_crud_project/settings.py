@@ -24,14 +24,20 @@ INSTALLED_APPS = [
     'items',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'items.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',  # Placed above custom middlewares
     'items.middleware.PendingApprovalMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'items.middleware.AgeRestrictionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -92,7 +98,7 @@ import mongoengine
 
 MONGO_URI = os.environ.get(
     'MONGO_URI',
-    'mongodb+srv://zaibshahid123_db_user:HAa4wdZNBPXQrzFX@djangocluster.h96h8tr.mongodb.net/mongo_crud_db?appName=djangocluster'
+    'mongodb+srv://zaibshahid123_db_user:kbkxNpZHkccMCHSD@djangocluster.h96h8tr.mongodb.net/mongo_crud_db?appName=djangocluster'
 )
 
 mongoengine.connect(host=MONGO_URI)

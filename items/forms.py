@@ -1,6 +1,8 @@
+import uuid
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 from .models import Item, Reservation
 
@@ -10,7 +12,8 @@ class ItemForm(forms.Form):
 
     name = forms.CharField(max_length=200, label='Dish Name')
     category = forms.ChoiceField(choices=CATEGORY_CHOICES, initial=Item.CATEGORY_CHOICES[0], label='Menu Category')
-    description = forms.CharField(max_length=2000, required=False, widget=forms.Textarea(attrs={'rows': 3}), label='Culinary Description')
+    description = forms.CharField(max_length=2000, required=False, widget=forms.Textarea(attrs={'rows': 3}),
+                                  label='Culinary Description')
     price = forms.DecimalField(min_value=0, decimal_places=2, max_digits=10, label='Price ($)')
     quantity = forms.IntegerField(min_value=0, label='Portions in Stock')
     discount_percent = forms.DecimalField(
@@ -27,6 +30,11 @@ class ItemForm(forms.Form):
 
 
 class SignupForm(UserCreationForm):
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=True,
+        label="Date of Birth"
+    )
     email = forms.EmailField(required=True)
     account_type = forms.ChoiceField(
         choices=[('customer', "I'm here to shop"), ('employee', 'I work here (staff)')],
@@ -37,7 +45,28 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'date_of_birth', 'account_type']
+
+    def clean_username(self):
+        """Bypass Django's default uniqueness check on display names."""
+        return self.cleaned_data.get('username')
+
+    def clean_email(self):
+        """Ensure email address is unique across the entire site."""
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("An account with this email address already exists.")
+        return email
+
+    def save(self, commit=True):
+        """Append a unique suffix to the internal username so SQLite allows duplicate display names."""
+        user = super().save(commit=False)
+        display_name = self.cleaned_data['username']
+        user.username = f"{display_name}_{uuid.uuid4().hex[:8]}"
+
+        if commit:
+            user.save()
+        return user
 
 
 class AddToCartForm(forms.Form):
@@ -50,7 +79,8 @@ class CheckoutForm(forms.Form):
         ('card', 'Credit / Debit Card'),
     ]
     shipping_name = forms.CharField(max_length=200, label='Full name')
-    shipping_address = forms.CharField(max_length=500, label='Delivery address', widget=forms.Textarea(attrs={'rows': 2}))
+    shipping_address = forms.CharField(max_length=500, label='Delivery address',
+                                       widget=forms.Textarea(attrs={'rows': 2}))
     shipping_city = forms.CharField(max_length=200, label='City')
     shipping_phone = forms.CharField(max_length=50, label='Phone number')
     payment_method = forms.ChoiceField(choices=PAYMENT_CHOICES, initial='cod')
@@ -76,11 +106,13 @@ class ReservationForm(forms.Form):
         help_text='Select your desired dining date'
     )
     time_slot = forms.ChoiceField(choices=TIME_SLOT_CHOICES, label='Preferred Dining Time Slot')
-    table_type = forms.ChoiceField(choices=TABLE_TYPE_CHOICES, initial='Poolside VIP Gazebo', label='Seating & Ambiance Preference')
+    table_type = forms.ChoiceField(choices=TABLE_TYPE_CHOICES, initial='Poolside VIP Gazebo',
+                                   label='Seating & Ambiance Preference')
     special_requests = forms.CharField(
         max_length=1000,
         required=False,
-        widget=forms.Textarea(attrs={'rows': 3, 'placeholder': 'Anniversary, birthday, dietary requirements, high chair needs, etc.'}),
+        widget=forms.Textarea(
+            attrs={'rows': 3, 'placeholder': 'Anniversary, birthday, dietary requirements, high chair needs, etc.'}),
         label='Special Requests / Celebrations'
     )
 
@@ -88,4 +120,3 @@ class ReservationForm(forms.Form):
 class ReservationStatusForm(forms.Form):
     STATUS_CHOICES = [(s, s) for s in Reservation.STATUS_CHOICES]
     status = forms.ChoiceField(choices=STATUS_CHOICES)
-
