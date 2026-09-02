@@ -2,8 +2,17 @@ from django.urls import path
 from django.contrib.auth.views import LoginView
 
 from . import views
+# in your app's urls.py, add:
+
+from .api_views import item_list_api
+
 
 urlpatterns = [
+    # serializer path later added for apis testing
+    path('api/items/', item_list_api, name='api_item_list'),
+
+path('profile/edit/', views.edit_profile, name='edit_profile'),
+
     path('', views.item_list, name='item_list'),
     path('create/', views.item_create, name='item_create'),
     path('<str:pk>/image/', views.item_image, name='item_image'),

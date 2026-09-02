@@ -2,6 +2,7 @@ import datetime
 import json
 from decimal import Decimal
 
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -10,6 +11,7 @@ from django.http import HttpResponse, Http404
 from mongoengine.errors import DoesNotExist, ValidationError
 
 from .forms import (
+    ProfileForm ,
     ItemForm, SignupForm, AddToCartForm, CheckoutForm,
     OrderStatusForm, ReservationForm, ReservationStatusForm,
 )
@@ -58,6 +60,24 @@ def item_image(request, pk):
         return HttpResponse(image_data, content_type=item.image.content_type)
     except Exception:
         raise Http404('Image not found')
+
+
+
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated — date of birth saved.')
+            return redirect('dashboard')
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, 'items/edit_profile.html', {'form': form})
+
+
 
 
 @role_required('owner', 'employee')
