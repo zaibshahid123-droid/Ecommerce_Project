@@ -4,14 +4,14 @@ from django.contrib.auth.views import LoginView
 from . import views
 # in your app's urls.py, add:
 
-from .api_views import item_list_api
-
+from .api_views import item_list_api, item_detail_api
 
 urlpatterns = [
     # serializer path later added for apis testing
     path('api/items/', item_list_api, name='api_item_list'),
+    path('api/items/<str:pk>/', item_detail_api, name='api_item_detail'),
 
-path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
 
     path('', views.item_list, name='item_list'),
     path('create/', views.item_create, name='item_create'),

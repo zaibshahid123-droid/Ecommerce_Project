@@ -4,7 +4,8 @@ Django settings for mongo_crud_project.
 
 import os
 from pathlib import Path
-
+from dotenv import load_dotenv
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep this secret in production, this is fine for local dev
@@ -99,10 +100,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ---------------------------------------------------------------------------
 import mongoengine
 
-MONGO_URI = os.environ.get(
-    'MONGO_URI',
-    'mongodb+srv://zaibshahid123_db_user:kbkxNpZHkccMCHSD@djangocluster.h96h8tr.mongodb.net/mongo_crud_db?appName=djangocluster'
-)
+MONGO_URI = os.environ.get('MONGO_URI')
+if not MONGO_URI:
+    raise ValueError("MONGO_URI environment variable is not set. Check your .env file.")
 
 mongoengine.connect(host=MONGO_URI)
 
