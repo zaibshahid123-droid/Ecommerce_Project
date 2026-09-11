@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-Django==6.1
+Django>=4.2,<5.0
 djangorestframework==3.18.0
 djangorestframework_simplejwt==5.5.1
 PyJWT==2.13.0
@@ -11,8 +10,3 @@ psycopg2-binary==2.9.12
 python-dotenv==1.2.3
 whitenoise==6.11.0
 Pillow==12.3.0
-=======
-Django>=4.2,<5.0
-mongoengine>=0.27
-pymongo>=4.0
->>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
