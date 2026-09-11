@@ -1,0 +1,100 @@
+[
+  {
+    "_id": {
+      "$oid": "6a84288ecf1847604fa83916"
+    },
+    "width": 3371,
+    "height": 5050,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 1240820,
+    "uploadDate": {
+      "$date": "2026-08-18T09:40:31.145Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a842967cf1847604fa8391c"
+    },
+    "width": 3826,
+    "height": 5279,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 741775,
+    "uploadDate": {
+      "$date": "2026-08-18T09:44:08.191Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a842986cf1847604fa83920"
+    },
+    "width": 3826,
+    "height": 5279,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 741775,
+    "uploadDate": {
+      "$date": "2026-08-18T09:44:39.087Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a8c110891b10413eae9d4c4"
+    },
+    "width": 4000,
+    "height": 5990,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 1473649,
+    "uploadDate": {
+      "$date": "2026-08-24T09:38:17.010Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a8c29747f6dd142d37e36a1"
+    },
+    "width": 4000,
+    "height": 5990,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 1473649,
+    "uploadDate": {
+      "$date": "2026-08-24T11:22:29.342Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a9a67974b740288de96bc3c"
+    },
+    "width": 1125,
+    "height": 1500,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 141961,
+    "uploadDate": {
+      "$date": "2026-09-04T06:39:20.094Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a9a68e94b740288de96bc3e"
+    },
+    "width": 320,
+    "height": 480,
+    "format": "JPEG",
+    "thumbnail_id": null,
+    "chunkSize": 261120,
+    "length": 48670,
+    "uploadDate": {
+      "$date": "2026-09-04T06:44:58.230Z"
+    }
+  }
+]

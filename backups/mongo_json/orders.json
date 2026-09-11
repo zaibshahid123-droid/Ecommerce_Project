@@ -1,0 +1,122 @@
+[
+  {
+    "_id": {
+      "$oid": "6a8be5c13d7b653e3345c061"
+    },
+    "user_id": 4,
+    "username": "ali",
+    "items": [
+      {
+        "item_id": "6a83fdbcbaf60805feb98913",
+        "name": "coffee",
+        "unit_price": 500.0,
+        "quantity": 2
+      }
+    ],
+    "subtotal": 1000.0,
+    "discount_total": 0.0,
+    "total": 1000.0,
+    "shipping_name": "zaib shahid",
+    "shipping_address": "flat no 9 third floor farah arcade karim block market lahore",
+    "shipping_city": "lahore",
+    "shipping_phone": "03219467031",
+    "payment_method": "cod",
+    "status": "Cancelled",
+    "created_at": {
+      "$date": "2026-08-24T06:33:37.429Z"
+    },
+    "updated_at": {
+      "$date": "2026-08-24T11:30:39.217Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a8be5f83d7b653e3345c062"
+    },
+    "user_id": 4,
+    "username": "ali",
+    "items": [
+      {
+        "item_id": "6a82c128939c131ec9a74468",
+        "name": "chai",
+        "unit_price": 111111.0,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 111111.0,
+    "discount_total": 0.0,
+    "total": 111111.0,
+    "shipping_name": "abid",
+    "shipping_address": "house no 2 lahore",
+    "shipping_city": "lahore",
+    "shipping_phone": "03246549874",
+    "payment_method": "card",
+    "status": "Cancelled",
+    "created_at": {
+      "$date": "2026-08-24T06:34:32.392Z"
+    },
+    "updated_at": {
+      "$date": "2026-08-24T11:30:25.390Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a8c26e57f6dd142d37e36a0"
+    },
+    "user_id": 5,
+    "username": "hamza",
+    "items": [
+      {
+        "item_id": "6a8c110991b10413eae9d4cb",
+        "name": "halwa",
+        "unit_price": 1275.0,
+        "quantity": 2
+      }
+    ],
+    "subtotal": 3000.0,
+    "discount_total": 450.0,
+    "total": 2550.0,
+    "shipping_name": "lion",
+    "shipping_address": "house no 1",
+    "shipping_city": "lahore",
+    "shipping_phone": "12345678",
+    "payment_method": "cod",
+    "status": "Cancelled",
+    "created_at": {
+      "$date": "2026-08-24T11:11:33.438Z"
+    },
+    "updated_at": {
+      "$date": "2026-08-24T11:30:14.893Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a97ceea96cb6ca92ca1cb94"
+    },
+    "user_id": 1,
+    "username": "zaib",
+    "items": [
+      {
+        "item_id": "6a82c128939c131ec9a74468",
+        "name": "chai",
+        "unit_price": 2.0,
+        "quantity": 1
+      }
+    ],
+    "subtotal": 2.0,
+    "discount_total": 0.0,
+    "total": 2.0,
+    "shipping_name": "john",
+    "shipping_address": "lahore 123 station",
+    "shipping_city": "lahore",
+    "shipping_phone": "032132123",
+    "payment_method": "cod",
+    "status": "Pending",
+    "created_at": {
+      "$date": "2026-09-02T07:23:22.185Z"
+    },
+    "updated_at": {
+      "$date": "2026-09-02T07:23:22.185Z"
+    }
+  }
+]

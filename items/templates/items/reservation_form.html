@@ -1,0 +1,114 @@
+{% extends 'items/base.html' %}
+{% block title %}Book a Table or VIP Gazebo — ZS Resort{% endblock %}
+
+{% block content %}
+<div class="reveal" style="margin-bottom: 36px; text-align: center; max-width: 720px; margin-left: auto; margin-right: auto;">
+    <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;">Sanctuary Reservations</span>
+    <h1 style="font-size: 38px; margin: 4px 0 10px;">Reserve Your Dining Experience</h1>
+    <p style="color: var(--text-muted); font-size: 15px; line-height: 1.6;">
+        Choose between our majestic Indoor Royal Hall, Poolside VIP Gazebos, Rooftop Star Gazing tables, or Private Dining Suites.
+    </p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; align-items: start; max-width: 1100px; margin: 0 auto 60px;">
+    
+    <!-- Left Column: Reservation Form -->
+    <div class="luxury-card reveal" style="padding: 36px 32px;">
+        <h2 style="font-size: 22px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+            Guest & Booking Information
+        </h2>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                {% for field in form %}
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}<li>{{ error }}</li>{% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div style="margin-top: 32px; border-top: 1px solid var(--border-light); padding-top: 24px;">
+                <button class="btn btn-gold" type="submit" style="width: 100%; padding: 14px; font-size: 15.5px; font-weight: 700;">
+                    ✦ Confirm Table Reservation Request
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Right Column: Seating Type Highlights & Concierge Perks -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+        
+        <!-- Table Types Showcase -->
+        <div class="luxury-card reveal" style="padding: 28px;">
+            <h3 style="font-size: 19px; margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                Seating Options
+            </h3>
+
+            <div style="display: flex; flex-direction: column; gap: 16px; font-size: 13.5px;">
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(212,175,55,0.12); color: var(--gold-dark); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                        🏛️
+                    </div>
+                    <div>
+                        <strong style="color: var(--onyx); font-size: 14.5px;">Indoor Royal Hall</strong>
+                        <p style="color: var(--text-muted); margin: 2px 0 0; line-height: 1.4;">Climate-controlled opulent dining with live soft instrumental tunes.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(212,175,55,0.12); color: var(--gold-dark); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                        🏖️
+                    </div>
+                    <div>
+                        <strong style="color: var(--onyx); font-size: 14.5px;">Poolside VIP Gazebo</strong>
+                        <p style="color: var(--text-muted); margin: 2px 0 0; line-height: 1.4;">Private curtained gazebos over crystal water bodies with dedicated butler service.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(212,175,55,0.12); color: var(--gold-dark); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                        ✨
+                    </div>
+                    <div>
+                        <strong style="color: var(--onyx); font-size: 14.5px;">Rooftop Star Gazing</strong>
+                        <p style="color: var(--text-muted); margin: 2px 0 0; line-height: 1.4;">Open-air panoramic night sky vistas with cozy ambient lantern lighting.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; align-items: flex-start;">
+                    <div style="width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(212,175,55,0.12); color: var(--gold-dark); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;">
+                        👑
+                    </div>
+                    <div>
+                        <strong style="color: var(--onyx); font-size: 14.5px;">Private Dining Suite</strong>
+                        <p style="color: var(--text-muted); margin: 2px 0 0; line-height: 1.4;">Exclusive private room for intimate family gatherings, birthdays, and business dinners.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reservation Policy -->
+        <div class="luxury-card reveal" style="padding: 24px; background: #FAF7F0;">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="color: var(--gold-dark); font-size: 18px;">ℹ️</span>
+                <h4 style="font-size: 16px; margin: 0; color: var(--onyx);">Reservation Policy</h4>
+            </div>
+            <p style="color: var(--text-muted); font-size: 13px; line-height: 1.5; margin: 0;">
+                Tables are held for up to 20 minutes past your reservation time slot. For parties of 15+ guests or custom multi-course banquet menus, our concierge desk is available 24/7.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

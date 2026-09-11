@@ -1,0 +1,146 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$geCPrVkWGORkFCa0f8n1QW$acDfb6LXNFEUpyYxhk8zQAaHphoklkP6jFwfPkHTERU=",
+    "last_login": "2026-09-01T08:33:19.662Z",
+    "is_superuser": true,
+    "username": "zaib",
+    "first_name": "",
+    "last_name": "",
+    "email": "zaibshahid123@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-08-18T09:07:09.188Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$Im2k2D2MOKSoyGP7CY9ZfO$5AWArCAvnAE+d5RQXoUCrdGoynLlXnWoyEapJrJtHE8=",
+    "last_login": "2026-08-24T09:33:55.561Z",
+    "is_superuser": false,
+    "username": "ali",
+    "first_name": "",
+    "last_name": "",
+    "email": "ali@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-24T06:29:45.103Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$AlEGrqkrEIthz4hMQzUVOE$AKVqK4UPu6et+gQ0KMD2ShhRkncPFKAFVZStmfXW4b0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "hammad",
+    "first_name": "",
+    "last_name": "",
+    "email": "hammad123@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-31T09:44:54.038Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$8UXNNv2iLxFB0xhjQOW6ME$8EDFox/Orrh0kKXXBg7GGUPrdzJ5qlVsrRTOIRj0AFw=",
+    "last_login": "2026-08-31T10:27:48.028Z",
+    "is_superuser": false,
+    "username": "Ali_82456e28",
+    "first_name": "",
+    "last_name": "",
+    "email": "Ali123@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-08-31T10:24:01.246Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "095w6js6f07qhnf4ro54gmb381qffupa",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQAP-yZ0MqC4Xt0Xvf0LALlaqBpLQn499Nkx70OjOZN0xh3_K0t7ROS4QBrnD5ZRzkmcoh4iOUe1VSy7YurI5Enbapscb0up3t3yCHlmEA7IwVT3NvmTUb7VzQ0kdCJELfEdsoHoWQHFEUnk1nUbuEDlOfzAyfL8SUNzk:1wwGJm:poKA4KjYUbQst8xoAu2eGlPhrsKOyi01Ecv9XpTPhwo",
+    "expire_date": "2026-09-01T09:41:14.640Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "0p5dljceu5lft8aeifgyevhzk2lwtkp1",
+  "fields": {
+    "session_data": ".eJxVizEOwjAMAP_iGVXESW23IxLviJwmViIoA2knxN8RUgcY7073gqj7VuPeyzO2DDMwnH5d0uVWHt_QtrL24eA-XFdt98tR_5aqvcIMEyIxknni5CbPJTOSqghT0ORHRyXnSR2JCKKk0YKRhWB69rZkhvcHYrEyEA:1x0zEy:OGz7yS2VRu2nczb2trDf93Im4HsW2NO_-U9sOYbmO1E",
+    "expire_date": "2026-09-14T10:27:48.036Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "jyjub7oc03a890ismfbwvt9gb6zfttpb",
+  "fields": {
+    "session_data": ".eJxVjEsOwiAUAO_y1obwKb8u3XsGwoOHVA0kpV0Z726adKHbmcm8IcR9q2EftIYlwwwCLr8MY3pSO0R-xHbvLPW2rQuyI2GnHezWM72uZ_s3qHFUmIHIk3ZCcoVOGmm085iE8d7QpDWq5DknbVyRSaOdVLS2WFXipFRxEg18vr9kNwA:1x1Jvj:s78LgRrS4NSmumgWiD9nUn8UXOM0mDln8eTZi30YRG8",
+    "expire_date": "2026-09-15T08:33:19.671Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "nzgkfbxqab3fd4pp84r84zz46bq3qt9k",
+  "fields": {
+    "session_data": "e30:1x0zBJ:kTQ4EULDzzO-7dZyGNKETxaksxqc04mn13x3II2G7TE",
+    "expire_date": "2026-09-14T10:24:01.917Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "y04rjt3s45hgiu400nh5k6b80jwufn1w",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQAP-yZ0MqC4Xt0Xvf0LALlaqBpLQn499Nkx70OjOZN0xh3_K0t7ROS4QBrnD5ZRzkmcoh4iOUe1VSy7YurI5Enbapscb0up3t3yCHlmEA7IwVT3NvmTUb7VzQ0kdCJELfEdsoHoWQHFEUnk1nUbuEDlOfzAyfL8SUNzk:1wyShz:sfzt7Y0ARWDLnrWIOMA7jBstpnWKua5fKKfQL4Qna6w",
+    "expire_date": "2026-09-07T11:19:19.330Z"
+  }
+},
+{
+  "model": "items.profile",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "zaib"
+    ],
+    "date_of_birth": "2002-09-22",
+    "role": "owner",
+    "is_approved": false
+  }
+},
+{
+  "model": "items.profile",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "ali"
+    ],
+    "date_of_birth": null,
+    "role": "customer",
+    "is_approved": true
+  }
+},
+{
+  "model": "items.profile",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "Ali_82456e28"
+    ],
+    "date_of_birth": "2013-07-18",
+    "role": "customer",
+    "is_approved": true
+  }
+}
+]

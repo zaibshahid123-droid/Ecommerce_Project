@@ -1,0 +1,463 @@
+{% extends 'items/base.html' %}
+{% block title %}Executive Operations & Analytics Dashboard — ZS Resort{% endblock %}
+
+{% block extra_head %}
+<!-- Chart.js for Business Intelligence Visualizations -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="reveal" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Executive Intelligence</span>
+        <h1 style="font-size: 34px; margin: 4px 0 6px;">Resort Operations & Revenue Analytics</h1>
+        <p style="color: var(--text-muted); font-size: 14.5px;">Live revenue performance, kitchen demand, table reservations, and team access.</p>
+    </div>
+
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <a href="{% url 'item_create' %}" class="btn btn-gold">
+            + Add New Dish
+        </a>
+        <a href="{% url 'manage_reservations' %}" class="btn btn-outline-gold">
+            Manage Bookings ({{ pending_reservations }} pending)
+        </a>
+        <a href="{% url 'order_management' %}" class="btn btn-dark">
+            Manage Orders ({{ order_count }})
+        </a>
+    </div>
+</div>
+
+<!-- KPI Metric Cards Grid -->
+<div class="reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-bottom: 36px;">
+    
+    <!-- KPI 1: Gross Sales -->
+    <div class="luxury-card" style="padding: 22px; border-left: 4px solid var(--gold);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;">Gross Revenue</span>
+            <span style="color: var(--gold-dark); font-size: 16px;">💵</span>
+        </div>
+        <div style="font-size: 32px; font-weight: 800; color: var(--onyx); font-family: 'Cinzel', serif;">${{ gross_revenue }}</div>
+        <div style="font-size: 12px; color: var(--emerald-text); margin-top: 4px; font-weight: 600;">${{ delivered_revenue }} fulfilled & paid</div>
+    </div>
+
+    <!-- KPI 2: Table Bookings -->
+    <a href="{% url 'manage_reservations' %}" class="luxury-card" style="padding: 22px; border-left: 4px solid #D4AF37; display: block; text-decoration: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;">Table Bookings</span>
+            <span style="font-size: 16px;">🏛️</span>
+        </div>
+        <div style="font-size: 32px; font-weight: 800; color: #D4AF37; font-family: 'Cinzel', serif;">{{ total_reservations }}</div>
+        <div style="font-size: 12px; color: var(--gold-dark); margin-top: 4px; font-weight: 600;">{{ pending_reservations }} awaiting confirmation →</div>
+    </a>
+
+    <!-- KPI 3: Orders in Queue -->
+    <a href="{% url 'order_management' %}" class="luxury-card" style="padding: 22px; border-left: 4px solid #2D58A7; display: block; text-decoration: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;">Orders In Queue</span>
+            <span style="font-size: 16px;">📋</span>
+        </div>
+        <div style="font-size: 32px; font-weight: 800; color: #2D58A7; font-family: 'Cinzel', serif;">{{ pending_order_count }}</div>
+        <div style="font-size: 12px; color: var(--gold-dark); margin-top: 4px; font-weight: 600;">{{ order_count }} total orders →</div>
+    </a>
+
+    <!-- KPI 4: Low Stock Warnings -->
+    <div class="luxury-card" style="padding: 22px; border-left: 4px solid {% if low_stock_count > 0 %}var(--ruby){% else %}var(--emerald){% endif %};">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;">Low Stock Alerts</span>
+            <span style="font-size: 16px;">⚠️</span>
+        </div>
+        <div style="font-size: 32px; font-weight: 800; color: {% if low_stock_count > 0 %}var(--ruby-text){% else %}var(--emerald-text){% endif %}; font-family: 'Cinzel', serif;">{{ low_stock_count }}</div>
+        <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">Dishes under 5 portions left</div>
+    </div>
+
+    <!-- KPI 5: Staff Approvals -->
+    <div class="luxury-card" style="padding: 22px; border-left: 4px solid #D49B28;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700;">Staff Approvals</span>
+            <span style="font-size: 16px;">👥</span>
+        </div>
+        <div style="font-size: 32px; font-weight: 800; color: #D49B28; font-family: 'Cinzel', serif;">{{ pending_count }}</div>
+        <div style="font-size: 12px; color: var(--text-light); margin-top: 4px;">Pending team registrations</div>
+    </div>
+
+</div>
+
+<!-- -------------------------------------------------------------
+     Analytics & Visual Charts Section (Chart.js)
+------------------------------------------------------------- -->
+<div class="reveal" style="display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 24px; margin-bottom: 36px; align-items: start;">
+    
+    <!-- Chart 1: Revenue Over Time -->
+    <div class="luxury-card" style="padding: 28px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <span style="color: var(--gold-dark); font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;">Financial Performance</span>
+                <h3 style="font-size: 20px; margin: 2px 0 0;">7-Day Sales & Revenue Trajectory</h3>
+            </div>
+            <span style="font-size: 12px; color: var(--text-muted); background: var(--surface-hover); padding: 4px 10px; border-radius: var(--radius-full);">Daily Total ($)</span>
+        </div>
+        <div style="position: relative; height: 280px; width: 100%;">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 2: Top Selling Dishes -->
+    <div class="luxury-card" style="padding: 28px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <span style="color: var(--gold-dark); font-size: 11px; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase;">Popularity</span>
+                <h3 style="font-size: 20px; margin: 2px 0 0;">Top Best-Selling Dishes</h3>
+            </div>
+            <span style="font-size: 12px; color: var(--text-muted); background: var(--surface-hover); padding: 4px 10px; border-radius: var(--radius-full);">Portions Sold</span>
+        </div>
+        <div style="position: relative; height: 280px; width: 100%;">
+            <canvas id="topDishesChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<!-- Secondary Charts Grid: Status & Payment Breakdown -->
+<div class="reveal" style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 36px;">
+    
+    <!-- Chart 3: Order Lifecycle Distribution -->
+    <div class="luxury-card" style="padding: 28px;">
+        <h3 style="font-size: 18px; margin-bottom: 16px;">Order Lifecycle Distribution</h3>
+        <div style="position: relative; height: 220px; width: 100%; display: flex; justify-content: center;">
+            <canvas id="statusChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Chart 4: Payment Methods Distribution -->
+    <div class="luxury-card" style="padding: 28px;">
+        <h3 style="font-size: 18px; margin-bottom: 16px;">Payment Method Breakdown</h3>
+        <div style="position: relative; height: 220px; width: 100%; display: flex; justify-content: center;">
+            <canvas id="paymentChart"></canvas>
+        </div>
+    </div>
+
+</div>
+
+<!-- Recent Reservations Preview Table -->
+{% if recent_reservations %}
+<div class="luxury-card reveal" style="margin-bottom: 36px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+        <div>
+            <span style="color: var(--gold-dark); font-size: 11.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;">Dining Bookings</span>
+            <h3 style="font-size: 22px; margin: 2px 0 0;">Recent Table & Gazebo Requests</h3>
+        </div>
+        <a href="{% url 'manage_reservations' %}" class="btn btn-outline-gold" style="padding: 6px 14px; font-size: 12.5px;">
+            View All {{ total_reservations }} Bookings →
+        </a>
+    </div>
+
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Ref #</th>
+                    <th>Date & Time</th>
+                    <th>Seating Type</th>
+                    <th>Party Size</th>
+                    <th>Guest Contact</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in recent_reservations %}
+                <tr>
+                    <td><strong style="color: var(--onyx); font-family: 'Cinzel', serif;">#{{ r.id }}</strong></td>
+                    <td>
+                        <strong style="color: var(--onyx);">{{ r.reservation_date }}</strong>
+                        <div style="font-size: 11.5px; color: var(--gold-dark);">{{ r.time_slot }}</div>
+                    </td>
+                    <td>{{ r.table_type }}</td>
+                    <td><strong style="color: var(--onyx);">{{ r.guest_count }}</strong></td>
+                    <td>
+                        <div><strong>{{ r.guest_name }}</strong></div>
+                        <div style="font-size: 12px; color: var(--text-light);">{{ r.guest_phone }}</div>
+                    </td>
+                    <td>
+                        <span class="status-pill status-{{ r.status }}">
+                            ● {{ r.status }}
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<!-- Low Stock Table (if any) -->
+{% if low_stock_items %}
+<div class="luxury-card reveal" style="margin-bottom: 36px; border: 1.5px solid rgba(139,30,45,0.3);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="color: var(--ruby-text); font-size: 18px;">⚠️</span>
+            <h3 style="font-size: 20px; color: var(--ruby-text); margin: 0;">Dishes Requiring Restock</h3>
+        </div>
+        <span style="font-size: 12px; font-weight: 700; color: var(--ruby-text); background: var(--ruby-light); padding: 4px 10px; border-radius: var(--radius-full);">
+            {{ low_stock_count }} Low Stock Item{{ low_stock_count|pluralize }}
+        </span>
+    </div>
+
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Dish Name</th>
+                    <th>Remaining Servings</th>
+                    <th>Price</th>
+                    <th style="text-align:right;">Restock Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for item in low_stock_items %}
+                <tr>
+                    <td><strong>{{ item.name }}</strong></td>
+                    <td>
+                        <span style="color: var(--ruby-text); font-weight: 800;">{{ item.quantity }} portion{{ item.quantity|pluralize }} left</span>
+                    </td>
+                    <td>${{ item.price }}</td>
+                    <td style="text-align: right;">
+                        <a href="{% url 'item_update' item.id %}" class="btn btn-outline-gold" style="padding: 6px 14px; font-size: 12px;">
+                            Restock & Edit →
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<!-- Team Administration -->
+<div class="luxury-card reveal">
+    <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div>
+            <span style="color: var(--gold-dark); font-size: 11.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;">Staff Access</span>
+            <h3 style="font-size: 22px; margin: 2px 0 0;">Team & Employee Accounts</h3>
+        </div>
+    </div>
+
+    {% if employees %}
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Staff Member</th>
+                    <th>Approval Status</th>
+                    <th>Account Health</th>
+                    <th style="text-align:right;">Authorization Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for profile in employees %}
+                <tr>
+                    <td>
+                        <div style="font-weight: 700; color: var(--onyx);">{{ profile.user.username }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">{{ profile.user.email }}</div>
+                    </td>
+                    <td>
+                        {% if profile.is_approved %}
+                            <span class="status-pill status-Delivered" style="font-size:11px;">✓ Approved</span>
+                        {% else %}
+                            <span class="status-pill status-Pending" style="font-size:11px;">⏳ Pending Approval</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if profile.user.is_active %}
+                            <span style="color: var(--emerald-text); font-weight: 700; font-size: 13px;">● Active</span>
+                        {% else %}
+                            <span style="color: var(--ruby-text); font-weight: 700; font-size: 13px;">● Suspended</span>
+                        {% endif %}
+                    </td>
+                    <td style="text-align: right;">
+                        <div style="display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;">
+                            {% if not profile.is_approved %}
+                                <form method="post" action="{% url 'approve_employee' profile.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-gold" style="padding: 6px 12px; font-size: 12px;" type="submit">Approve Access</button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'disapprove_employee' profile.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-subtle" style="padding: 6px 12px; font-size: 12px;" type="submit">Pause Access</button>
+                                </form>
+                            {% endif %}
+
+                            {% if profile.user.is_active %}
+                                <form method="post" action="{% url 'deactivate_employee' profile.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-subtle" style="padding: 6px 12px; font-size: 12px; color:var(--ruby-text);" type="submit">Deactivate</button>
+                                </form>
+                            {% else %}
+                                <form method="post" action="{% url 'activate_employee' profile.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-subtle" style="padding: 6px 12px; font-size: 12px; color:var(--emerald-text);" type="submit">Reactivate</button>
+                                </form>
+                            {% endif %}
+
+                            <form method="post" action="{% url 'delete_employee' profile.id %}" onsubmit="return confirm('Permanently delete staff account for {{ profile.user.username }}?');" style="display:inline;">
+                                {% csrf_token %}
+                                <button class="btn btn-danger" style="padding: 6px 12px; font-size: 12px;" type="submit">Remove</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+            No staff members have registered yet.
+        </div>
+    {% endif %}
+</div>
+
+<!-- Initialize Chart.js Scripts -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const revenueLabels = {{ revenue_chart_labels_json|safe }};
+    const revenueData = {{ revenue_chart_data_json|safe }};
+    const topDishLabels = {{ top_dish_labels_json|safe }};
+    const topDishData = {{ top_dish_data_json|safe }};
+    const statusLabels = {{ status_chart_labels_json|safe }};
+    const statusData = {{ status_chart_data_json|safe }};
+    const paymentLabels = {{ payment_chart_labels_json|safe }};
+    const paymentData = {{ payment_chart_data_json|safe }};
+
+    // 1. Revenue Trajectory Area Chart
+    const ctxRev = document.getElementById('revenueChart');
+    if (ctxRev) {
+        new Chart(ctxRev, {
+            type: 'line',
+            data: {
+                labels: revenueLabels,
+                datasets: [{
+                    label: 'Daily Revenue ($)',
+                    data: revenueData,
+                    borderColor: '#D4AF37',
+                    backgroundColor: 'rgba(212, 175, 55, 0.12)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.35,
+                    pointBackgroundColor: '#B8860B',
+                    pointBorderColor: '#FFFFFF',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(ctx) { return ' $' + ctx.parsed.y.toFixed(2); }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { callback: function(val) { return '$' + val; } }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // 2. Top Selling Dishes Bar Chart
+    const ctxTop = document.getElementById('topDishesChart');
+    if (ctxTop) {
+        new Chart(ctxTop, {
+            type: 'bar',
+            data: {
+                labels: topDishLabels.length > 0 ? topDishLabels : ['No Orders Yet'],
+                datasets: [{
+                    label: 'Portions Ordered',
+                    data: topDishData.length > 0 ? topDishData : [0],
+                    backgroundColor: ['#D4AF37', '#B8860B', '#253338', '#1C4336', '#8B1E2D'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+    }
+
+    // 3. Order Status Doughnut
+    const ctxStatus = document.getElementById('statusChart');
+    if (ctxStatus) {
+        new Chart(ctxStatus, {
+            type: 'doughnut',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusData,
+                    backgroundColor: ['#D49B28', '#2D58A7', '#B8860B', '#1C4336', '#8B1E2D'],
+                    borderWidth: 2,
+                    borderColor: '#FFF'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                },
+                cutout: '65%'
+            }
+        });
+    }
+
+    // 4. Payment Method Doughnut
+    const ctxPayment = document.getElementById('paymentChart');
+    if (ctxPayment) {
+        new Chart(ctxPayment, {
+            type: 'doughnut',
+            data: {
+                labels: paymentLabels,
+                datasets: [{
+                    data: paymentData,
+                    backgroundColor: ['#1C4336', '#D4AF37'],
+                    borderWidth: 2,
+                    borderColor: '#FFF'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right' }
+                },
+                cutout: '65%'
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

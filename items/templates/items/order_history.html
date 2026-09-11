@@ -1,0 +1,98 @@
+{% extends 'items/base.html' %}
+{% block title %}My Order History — ZS Resort{% endblock %}
+
+{% block content %}
+<div class="reveal" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Dining Records</span>
+        <h1 style="font-size: 34px; margin: 4px 0 6px;">My Order History</h1>
+        <p style="color: var(--text-muted); font-size: 14.5px;">Track your in-villa and dining room reservations.</p>
+    </div>
+    
+    <a href="{% url 'item_list' %}" class="btn btn-gold">
+        + Place New Order
+    </a>
+</div>
+
+{% if orders %}
+<div class="luxury-card reveal" style="padding: 24px;">
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Order Reference</th>
+                    <th>Placed On</th>
+                    <th>Dishes Ordered</th>
+                    <th>Grand Total</th>
+                    <th>Status</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        <strong style="color: var(--onyx); font-family: 'Cinzel', serif;">#{{ order.id }}</strong>
+                    </td>
+                    <td style="color: var(--text-muted);">
+                        {{ order.created_at|date:"M j, Y, g:i A" }}
+                    </td>
+                    <td>
+                        <span style="font-weight: 600;">{{ order.items|length }} dish{{ order.items|length|pluralize:"es" }}</span>
+                        <div style="font-size: 12px; color: var(--text-light); max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            {% for it in order.items %}{{ it.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <span style="font-weight: 800; font-size: 16px; color: var(--onyx);">${{ order.total }}</span>
+                    </td>
+                    <td>
+                        <span class="status-pill status-{{ order.status }}">
+                            ● {{ order.status }}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div style="display: flex; gap: 8px; justify-content: flex-end; align-items: center; flex-wrap: wrap;">
+                            <a class="btn btn-outline-gold" style="padding: 6px 14px; font-size: 12.5px;" href="{% url 'order_detail' order.id %}">
+                                View Receipt →
+                            </a>
+                            <a href="{% url 'order_detail' order.id %}#print"
+                               title="Print Receipt"
+                               style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; border: 1.5px solid var(--border); color: var(--text-muted); background: var(--surface); transition: all 0.2s ease; text-decoration: none;"
+                               onmouseover="this.style.borderColor='var(--gold)'; this.style.color='var(--gold-dark)'; this.style.background='rgba(212,175,55,0.06)';"
+                               onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-muted)'; this.style.background='var(--surface)';">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 6 2 18 2 18 9"/>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                    <rect x="6" y="14" width="12" height="8"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="luxury-card reveal" style="text-align: center; padding: 72px 24px; max-width: 580px; margin: 40px auto;">
+    <div style="width: 72px; height: 72px; background: rgba(212,175,55,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--gold-dark);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+    </div>
+    <h2 style="font-size: 26px; margin-bottom: 8px;">No Previous Orders Found</h2>
+    <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.6; margin-bottom: 24px;">
+        You have not placed any dining orders under this account yet. Ready to experience our gourmet recipes?
+    </p>
+    <a href="{% url 'item_list' %}" class="btn btn-gold" style="padding: 13px 32px;">
+        Browse the Menu Now
+    </a>
+</div>
+{% endif %}
+{% endblock %}

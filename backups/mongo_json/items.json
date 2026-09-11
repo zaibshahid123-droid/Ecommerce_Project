@@ -1,0 +1,96 @@
+[
+  {
+    "_id": {
+      "$oid": "6a82c128939c131ec9a74468"
+    },
+    "name": "chai",
+    "description": "italian pizza with chilli sauce",
+    "price": 2.0,
+    "quantity": 130,
+    "created_at": {
+      "$date": "2026-08-17T08:07:04.299Z"
+    },
+    "updated_at": {
+      "$date": "2026-08-24T11:29:11.987Z"
+    },
+    "image": {
+      "$oid": "6a84288ecf1847604fa83916"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a8c110991b10413eae9d4cb"
+    },
+    "name": "halwa",
+    "description": "this halwa comes from persia",
+    "price": 5.0,
+    "quantity": 5000,
+    "discount_percent": 15.0,
+    "image": {
+      "$oid": "6a8c110891b10413eae9d4c4"
+    },
+    "created_at": {
+      "$date": "2026-08-24T09:38:15.742Z"
+    },
+    "updated_at": {
+      "$date": "2026-08-24T11:29:41.235Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a97fe0043302f99c34f8a63"
+    },
+    "name": "Chicken Tikka",
+    "category": "Tandoori & Charcoal BBQ",
+    "description": "Charcoal-grilled marinated chicken",
+    "price": 20.12,
+    "quantity": 30,
+    "discount_percent": 2.0,
+    "created_at": {
+      "$date": "2026-09-02T10:44:16.746Z"
+    },
+    "updated_at": {
+      "$date": "2026-09-02T10:44:16.746Z"
+    },
+    "image": {
+      "$oid": "6a9a68e94b740288de96bc3e"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a9a65fa4b740288de96bc3a"
+    },
+    "name": "Chicken shashlik",
+    "category": "Tandoori & Charcoal BBQ",
+    "description": "lemon sauce with red chillie",
+    "price": 11.2,
+    "quantity": 8,
+    "discount_percent": 0.0,
+    "created_at": {
+      "$date": "2026-09-04T06:32:26.520Z"
+    },
+    "updated_at": {
+      "$date": "2026-09-04T06:32:26.520Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a9a67974b740288de96bc3b"
+    },
+    "name": "egg paratha",
+    "category": "Fresh Clay Oven Breads",
+    "description": "egg omlette with white rice",
+    "price": 8.0,
+    "quantity": 2,
+    "discount_percent": 1.0,
+    "created_at": {
+      "$date": "2026-09-04T06:39:19.385Z"
+    },
+    "updated_at": {
+      "$date": "2026-09-04T06:39:19.385Z"
+    },
+    "image": {
+      "$oid": "6a9a67974b740288de96bc3c"
+    }
+  }
+]

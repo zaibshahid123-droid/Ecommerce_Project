@@ -1,0 +1,60 @@
+[
+  {
+    "_id": {
+      "$oid": "6a8be48f3d7b653e3345c05f"
+    },
+    "user_id": 1,
+    "updated_at": {
+      "$date": "2026-09-04T07:21:22.901Z"
+    },
+    "items": [
+      {
+        "item_id": "6a9a67974b740288de96bc3b",
+        "quantity": 1
+      },
+      {
+        "item_id": "6a97fe0043302f99c34f8a63",
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6a8be4e43d7b653e3345c060"
+    },
+    "user_id": 4,
+    "updated_at": {
+      "$date": "2026-08-24T07:39:57.866Z"
+    },
+    "items": [
+      {
+        "item_id": "6a83fdbcbaf60805feb98913",
+        "quantity": 3
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6a8c18f791b10413eae9d4d0"
+    },
+    "user_id": 5,
+    "updated_at": {
+      "$date": "2026-08-24T11:11:33.646Z"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6a9558191f9716b906f1fb0d"
+    },
+    "user_id": 7,
+    "items": [
+      {
+        "item_id": "6a8c110991b10413eae9d4cb",
+        "quantity": 1
+      }
+    ],
+    "updated_at": {
+      "$date": "2026-08-31T10:32:01.525Z"
+    }
+  }
+]

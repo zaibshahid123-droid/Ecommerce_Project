@@ -1,0 +1,105 @@
+{% extends 'items/base.html' %}
+{% block title %}Manage Orders & Kitchen Dispatch — ZS Resort{% endblock %}
+
+{% block content %}
+<div class="reveal" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Staff Command Center</span>
+        <h1 style="font-size: 34px; margin: 4px 0 6px;">Order & Dispatch Management</h1>
+        <p style="color: var(--text-muted); font-size: 14.5px;">Monitor kitchen fulfillment, room delivery statuses, and billing.</p>
+    </div>
+
+    <div style="display: flex; gap: 12px;">
+        <a href="{% url 'dashboard' %}" class="btn btn-subtle">
+            ← Dashboard
+        </a>
+        <a href="{% url 'item_list' %}" class="btn btn-gold">
+            View Live Menu
+        </a>
+    </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="reveal" style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+    <a class="btn {% if not status_filter %}btn-dark{% else %}btn-subtle{% endif %}" href="{% url 'order_management' %}" style="padding: 8px 20px; font-size: 13px; border-radius: var(--radius-full);">
+        All Orders
+    </a>
+    {% for s in statuses %}
+        <a class="btn {% if status_filter == s %}btn-gold{% else %}btn-subtle{% endif %}" href="?status={{ s }}" style="padding: 8px 18px; font-size: 13px; border-radius: var(--radius-full);">
+            {{ s }}
+        </a>
+    {% endfor %}
+</div>
+
+{% if orders %}
+<div class="luxury-card reveal" style="padding: 24px;">
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Order Reference</th>
+                    <th>Customer Name</th>
+                    <th>Date & Time</th>
+                    <th>Items</th>
+                    <th>Total Due</th>
+                    <th>Lifecycle Status</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>
+                        <strong style="color: var(--onyx); font-family: 'Cinzel', serif;">#{{ order.id }}</strong>
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: var(--onyx);">{{ order.shipping_name|default:order.username }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">@{{ order.username }}</div>
+                    </td>
+                    <td style="color: var(--text-muted); font-size: 13.5px;">
+                        {{ order.created_at|date:"M j, Y, g:i A" }}
+                    </td>
+                    <td>
+                        <span style="font-weight: 600;">{{ order.items|length }} dish{{ order.items|length|pluralize:"es" }}</span>
+                    </td>
+                    <td>
+                        <span style="font-weight: 800; font-size: 15.5px; color: var(--onyx);">${{ order.total }}</span>
+                    </td>
+                    <td>
+                        <span class="status-pill status-{{ order.status }}">
+                            ● {{ order.status }}
+                        </span>
+                    </td>
+                    <td style="text-align: right;">
+                        <div style="display: flex; gap: 8px; justify-content: flex-end; align-items: center; flex-wrap: wrap;">
+                            <a class="btn btn-outline-gold" style="padding: 6px 14px; font-size: 12.5px;" href="{% url 'order_detail' order.id %}">
+                                Manage Status →
+                            </a>
+                            <a href="{% url 'order_detail' order.id %}#print"
+                               title="Quick Print Receipt"
+                               style="display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; border: 1.5px solid var(--border); color: var(--text-muted); background: var(--surface); transition: all 0.2s ease; text-decoration: none;"
+                               onmouseover="this.style.borderColor='var(--gold)'; this.style.color='var(--gold-dark)'; this.style.background='rgba(212,175,55,0.06)';"
+                               onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-muted)'; this.style.background='var(--surface)';">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 6 2 18 2 18 9"/>
+                                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                                    <rect x="6" y="14" width="12" height="8"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="luxury-card reveal" style="text-align: center; padding: 64px 20px; max-width: 520px; margin: 40px auto;">
+    <div style="font-size: 38px; margin-bottom: 14px;">📋</div>
+    <h3 style="font-size: 22px; margin-bottom: 6px;">No Orders Matching "{% if status_filter %}{{ status_filter }}{% else %}Current Selection{% endif %}"</h3>
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">There are currently no active orders in this queue.</p>
+    <a href="{% url 'order_management' %}" class="btn btn-subtle">View All Orders</a>
+</div>
+{% endif %}
+{% endblock %}

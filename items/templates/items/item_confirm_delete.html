@@ -1,0 +1,29 @@
+{% extends 'items/base.html' %}
+{% block title %}Delete Dish Confirmation — ZS Resort{% endblock %}
+
+{% block content %}
+<div class="luxury-card reveal" style="max-width: 500px; margin: 60px auto; text-align: center; padding: 44px 32px; border: 1.5px solid rgba(139,30,45,0.3);">
+    <div style="width: 60px; height: 60px; border-radius: 50%; background: var(--ruby-light); color: var(--ruby-text); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 26px;">
+        ⚠️
+    </div>
+    
+    <span style="color: var(--ruby-text); font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;">Irreversible Action</span>
+    <h2 style="font-size: 26px; margin: 6px 0 10px;">Remove "{{ item.name }}"?</h2>
+    
+    <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.6; margin: 0 auto 28px; max-width: 400px;">
+        This action will permanently delete this dish, its associated photo, and remove it from the live guest menu immediately.
+    </p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn btn-danger" type="submit" style="padding: 13px 28px; font-size: 14px;">
+                Yes, Delete Dish Permanently
+            </button>
+            <a class="btn btn-subtle" href="{% url 'item_list' %}" style="padding: 13px 24px; font-size: 14px;">
+                Cancel & Keep Dish
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

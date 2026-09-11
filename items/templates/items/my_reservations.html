@@ -1,0 +1,82 @@
+{% extends 'items/base.html' %}
+{% block title %}My Table Bookings — ZS Resort{% endblock %}
+
+{% block content %}
+<div class="reveal" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+    <div>
+        <span style="color: var(--gold-dark); font-size: 12px; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Dining Reservations</span>
+        <h1 style="font-size: 34px; margin: 4px 0 6px;">My Table & Gazebo Bookings</h1>
+        <p style="color: var(--text-muted); font-size: 14.5px;">Review your upcoming table reservations and past dining experiences.</p>
+    </div>
+    
+    <a href="{% url 'reserve_table' %}" class="btn btn-gold">
+        ✦ Book Another Table
+    </a>
+</div>
+
+{% if reservations %}
+<div class="luxury-card reveal" style="padding: 24px;">
+    <div class="luxury-table-wrapper">
+        <table class="luxury-table">
+            <thead>
+                <tr>
+                    <th>Booking Ref</th>
+                    <th>Date & Time Slot</th>
+                    <th>Seating Type</th>
+                    <th>Guests</th>
+                    <th>Host Contact</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in reservations %}
+                <tr>
+                    <td>
+                        <strong style="color: var(--onyx); font-family: 'Cinzel', serif;">#{{ r.id }}</strong>
+                        <div style="font-size: 11.5px; color: var(--text-light);">{{ r.created_at|date:"M j, Y" }}</div>
+                    </td>
+                    <td>
+                        <div style="font-weight: 700; color: var(--onyx);">{{ r.reservation_date }}</div>
+                        <div style="font-size: 12.5px; color: var(--gold-dark); font-weight: 600;">{{ r.time_slot }}</div>
+                    </td>
+                    <td>
+                        <span style="font-weight: 600; color: var(--onyx);">{{ r.table_type }}</span>
+                        {% if r.special_requests %}
+                            <div style="font-size: 11.5px; color: var(--text-light); max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{ r.special_requests }}">
+                                Note: {{ r.special_requests }}
+                            </div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span style="font-weight: 800; font-size: 15px; color: var(--onyx);">{{ r.guest_count }} Person{{ r.guest_count|pluralize }}</span>
+                    </td>
+                    <td>
+                        <div style="font-weight: 600; color: var(--onyx);">{{ r.guest_name }}</div>
+                        <div style="font-size: 12px; color: var(--text-light);">{{ r.guest_phone }}</div>
+                    </td>
+                    <td>
+                        <span class="status-pill status-{{ r.status }}">
+                            ● {{ r.status }}
+                        </span>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="luxury-card reveal" style="text-align: center; padding: 72px 24px; max-width: 580px; margin: 40px auto;">
+    <div style="width: 72px; height: 72px; background: rgba(212,175,55,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--gold-dark); font-size: 32px;">
+        🏛️
+    </div>
+    <h2 style="font-size: 26px; margin-bottom: 8px;">No Table Reservations Found</h2>
+    <p style="color: var(--text-muted); font-size: 14.5px; line-height: 1.6; margin-bottom: 24px;">
+        You haven't reserved any dining tables or poolside VIP gazebos yet. Reserve your table in advance for an exquisite fine dining evening.
+    </p>
+    <a href="{% url 'reserve_table' %}" class="btn btn-gold" style="padding: 13px 32px;">
+        Reserve a Table Now
+    </a>
+</div>
+{% endif %}
+{% endblock %}
