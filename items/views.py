@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import json
 from decimal import Decimal
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,12 +16,29 @@ from django.contrib.auth.models import User
 
 from .forms import (
     ProfileForm,
+=======
+import datetime
+import json
+from decimal import Decimal
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, Http404
+from mongoengine.errors import DoesNotExist, ValidationError
+
+from .forms import (
+    ProfileForm ,
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     ItemForm, SignupForm, AddToCartForm, CheckoutForm,
     OrderStatusForm, ReservationForm, ReservationStatusForm,
 )
 from .models import Item, Profile, Cart, CartItem, Order, OrderItem, Reservation
 from .decorators import role_required
 
+<<<<<<< HEAD
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -34,6 +52,11 @@ def protected_view(request):
     return Response({"message": f"Hello {request.user.username}, you're authenticated!"})
 
 
+=======
+LOW_STOCK_THRESHOLD = 5
+
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 def item_list(request):
     query = request.GET.get('q', '').strip()
     category_filter = request.GET.get('category', '').strip()
@@ -75,6 +98,11 @@ def item_image(request, pk):
         raise Http404('Image not found')
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 @login_required
 def edit_profile(request):
     profile = request.user.profile
@@ -89,6 +117,11 @@ def edit_profile(request):
     return render(request, 'items/edit_profile.html', {'form': form})
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 @role_required('owner', 'employee')
 def item_create(request):
     if request.method == 'POST':
@@ -129,7 +162,11 @@ def item_update(request, pk):
             item.price = form.cleaned_data['price']
             item.quantity = form.cleaned_data['quantity']
             item.discount_percent = form.cleaned_data['discount_percent']
+<<<<<<< HEAD
             item.updated_at = timezone.now()
+=======
+            item.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             if form.cleaned_data.get('image'):
                 item.image = form.cleaned_data['image']
             item.save()
@@ -161,6 +198,7 @@ def signup_view(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
+<<<<<<< HEAD
             user = form.save()  # Saves to PostgreSQL (Neon)
             account_type = form.cleaned_data['account_type']
             dob = form.cleaned_data.get('date_of_birth')
@@ -172,6 +210,20 @@ def signup_view(request):
             profile.save()
 
             login(request, user)  # Native Django session login
+=======
+            user = form.save()
+            account_type = form.cleaned_data['account_type']
+            dob = form.cleaned_data.get('date_of_birth')  # Grab DOB from cleaned_data
+
+            # Access or create the linked profile
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.role = account_type
+            profile.is_approved = (account_type == 'customer')
+            profile.date_of_birth = dob  # Save Date of Birth
+            profile.save()
+
+            login(request, user,backend='items.backends.EmailBackend')
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             if account_type == 'customer':
                 messages.success(request, 'Welcome! Your account is ready — start shopping.')
                 return redirect('item_list')
@@ -181,6 +233,7 @@ def signup_view(request):
         form = SignupForm()
     return render(request, 'items/signup.html', {'form': form})
 
+<<<<<<< HEAD
 
 def login_view(request):
     if request.method == 'POST':
@@ -202,6 +255,13 @@ def login_view(request):
 def logout_view(request):
     logout(request)  # Native Django session logout
     return redirect('login')
+=======
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 @role_required('owner', 'employee')
 def pending_approval(request):
     profile = getattr(request.user, 'profile', None)
@@ -225,10 +285,15 @@ def _owner_dashboard(request):
     low_stock_items = Item.objects.filter(quantity__lt=LOW_STOCK_THRESHOLD)
     employees = Profile.objects.filter(role='employee').select_related('user').order_by('-id')
 
+<<<<<<< HEAD
+=======
+    # All Orders & Revenue Intelligence
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     all_orders = list(Order.objects.all().order_by('-created_at'))
     gross_revenue = sum((o.total for o in all_orders if o.status != 'Cancelled'), Decimal('0.00'))
     delivered_revenue = sum((o.total for o in all_orders if o.status == 'Delivered'), Decimal('0.00'))
 
+<<<<<<< HEAD
     # Fixed Date comparison bug
     today = timezone.now().date()
     days = [today - timezone.timedelta(days=i) for i in range(6, -1, -1)]
@@ -240,6 +305,18 @@ def _owner_dashboard(request):
             Decimal('0.00'))
         revenue_chart_data.append(float(day_sum))
 
+=======
+    # Daily Revenue Trend (Last 7 Days)
+    today = datetime.datetime.utcnow().date()
+    days = [today - datetime.timedelta(days=i) for i in range(6, -1, -1)]
+    revenue_chart_labels = [d.strftime('%a, %b %d') for d in days]
+    revenue_chart_data = []
+    for d in days:
+        day_sum = sum((o.total for o in all_orders if o.created_at.date() == d and o.status != 'Cancelled'), Decimal('0.00'))
+        revenue_chart_data.append(float(day_sum))
+
+    # Top 5 Best-Selling Dishes
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     dish_sales = {}
     for o in all_orders:
         if o.status != 'Cancelled':
@@ -250,6 +327,10 @@ def _owner_dashboard(request):
     top_dish_labels = [d[0] for d in sorted_dishes]
     top_dish_data = [d[1] for d in sorted_dishes]
 
+<<<<<<< HEAD
+=======
+    # Order Status Breakdown
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     status_counts = {s: 0 for s in Order.STATUS_CHOICES}
     for o in all_orders:
         if o.status in status_counts:
@@ -258,11 +339,19 @@ def _owner_dashboard(request):
     status_chart_labels = list(status_counts.keys())
     status_chart_data = list(status_counts.values())
 
+<<<<<<< HEAD
+=======
+    # Payment Methods
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     cod_count = sum(1 for o in all_orders if getattr(o, 'payment_method', 'cod') == 'cod')
     card_count = sum(1 for o in all_orders if getattr(o, 'payment_method', 'cod') == 'card')
     payment_chart_labels = ['Cash on Delivery', 'Credit/Debit Card']
     payment_chart_data = [cod_count, card_count]
 
+<<<<<<< HEAD
+=======
+    # Table Reservations
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     all_reservations = list(Reservation.objects.all().order_by('-created_at'))
     total_reservations = len(all_reservations)
     pending_reservations = sum(1 for r in all_reservations if r.status == 'Pending')
@@ -279,6 +368,10 @@ def _owner_dashboard(request):
         'pending_order_count': status_counts.get('Pending', 0),
         'gross_revenue': gross_revenue,
         'delivered_revenue': delivered_revenue,
+<<<<<<< HEAD
+=======
+        # Chart.js Serialized JSON
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         'revenue_chart_labels_json': json.dumps(revenue_chart_labels),
         'revenue_chart_data_json': json.dumps(revenue_chart_data),
         'top_dish_labels_json': json.dumps(top_dish_labels),
@@ -287,6 +380,10 @@ def _owner_dashboard(request):
         'status_chart_data_json': json.dumps(status_chart_data),
         'payment_chart_labels_json': json.dumps(payment_chart_labels),
         'payment_chart_data_json': json.dumps(payment_chart_data),
+<<<<<<< HEAD
+=======
+        # Reservations
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         'total_reservations': total_reservations,
         'pending_reservations': pending_reservations,
         'confirmed_reservations': confirmed_reservations,
@@ -353,11 +450,22 @@ def delete_employee(request, profile_id):
     profile = get_object_or_404(Profile, id=profile_id, role='employee')
     if request.method == 'POST':
         username = profile.user.username
+<<<<<<< HEAD
         profile.user.delete()
+=======
+        profile.user.delete()  # cascades and deletes the Profile too
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         messages.success(request, f'{username} removed permanently.')
     return redirect('dashboard')
 
 
+<<<<<<< HEAD
+=======
+# ---------------------------------------------------------------------------
+# Shopping cart
+# ---------------------------------------------------------------------------
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 def _get_or_create_cart(user):
     cart = Cart.objects(user_id=user.id).first()
     if cart is None:
@@ -367,6 +475,11 @@ def _get_or_create_cart(user):
 
 
 def _cart_line_items(cart):
+<<<<<<< HEAD
+=======
+    """Resolve a Cart's embedded CartItems into (item, quantity, line_total) tuples,
+    silently dropping any lines whose Item no longer exists."""
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     lines = []
     stale = False
     for ci in list(cart.items):
@@ -393,12 +506,20 @@ def _cart_line_items(cart):
             'regular_line_total': (item.price * ci.quantity).quantize(Decimal('0.01')),
         })
     if stale:
+<<<<<<< HEAD
         cart.updated_at = timezone.now()
+=======
+        cart.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         cart.save()
     return lines
 
 
 def cart_item_count(request):
+<<<<<<< HEAD
+=======
+    """Small helper used by the nav badge; safe to call for anonymous users."""
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     if not request.user.is_authenticated:
         return 0
     cart = Cart.objects(user_id=request.user.id).first()
@@ -442,7 +563,11 @@ def add_to_cart(request, pk):
                 existing.quantity = new_qty
             else:
                 cart.items.append(CartItem(item_id=str(item.id), quantity=new_qty))
+<<<<<<< HEAD
             cart.updated_at = timezone.now()
+=======
+            cart.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             cart.save()
             messages.success(request, f'Added {item.name} to your cart.')
         else:
@@ -469,7 +594,11 @@ def update_cart_item(request, pk):
             else:
                 qty = min(qty, item.quantity) if item.quantity > 0 else qty
                 existing.quantity = qty
+<<<<<<< HEAD
             cart.updated_at = timezone.now()
+=======
+            cart.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             cart.save()
     return redirect('cart_view')
 
@@ -482,12 +611,23 @@ def remove_from_cart(request, pk):
         existing = next((ci for ci in cart.items if ci.item_id == str(item.id)), None)
         if existing:
             cart.items.remove(existing)
+<<<<<<< HEAD
             cart.updated_at = timezone.now()
+=======
+            cart.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             cart.save()
             messages.success(request, f'Removed {item.name} from your cart.')
     return redirect('cart_view')
 
 
+<<<<<<< HEAD
+=======
+# ---------------------------------------------------------------------------
+# Checkout & orders
+# ---------------------------------------------------------------------------
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 @login_required
 def checkout_view(request):
     cart = _get_or_create_cart(request.user)
@@ -504,6 +644,10 @@ def checkout_view(request):
     if request.method == 'POST':
         form = CheckoutForm(request.POST)
         if form.is_valid():
+<<<<<<< HEAD
+=======
+            # Re-validate stock right before committing the order.
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             for line in lines:
                 fresh_item = _get_item_or_404(str(line['item'].id))
                 if fresh_item.quantity < line['quantity']:
@@ -537,13 +681,21 @@ def checkout_view(request):
             )
             order.save()
 
+<<<<<<< HEAD
+=======
+            # Decrement stock for real.
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             for line in lines:
                 fresh_item = _get_item_or_404(str(line['item'].id))
                 fresh_item.quantity = max(0, fresh_item.quantity - line['quantity'])
                 fresh_item.save()
 
             cart.items = []
+<<<<<<< HEAD
             cart.updated_at = timezone.now()
+=======
+            cart.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             cart.save()
 
             messages.success(request, 'Order placed! Thank you.')
@@ -614,12 +766,23 @@ def update_order_status(request, order_id):
         form = OrderStatusForm(request.POST)
         if form.is_valid():
             order.status = form.cleaned_data['status']
+<<<<<<< HEAD
             order.updated_at = timezone.now()
+=======
+            order.updated_at = datetime.datetime.utcnow()
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
             order.save()
             messages.success(request, f'Order marked as {order.status}.')
     return redirect('order_detail', order_id=str(order.id))
 
 
+<<<<<<< HEAD
+=======
+# ---------------------------------------------------------------------------
+# Table & VIP Gazebo Reservations Views
+# ---------------------------------------------------------------------------
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 def _get_reservation_or_404(reservation_id):
     try:
         return Reservation.objects.get(id=reservation_id)
@@ -645,15 +808,26 @@ def reserve_table(request):
                 special_requests=form.cleaned_data['special_requests'],
             )
             reservation.save()
+<<<<<<< HEAD
             messages.success(request,
                              f"Table reservation requested for {reservation.guest_name}! Our concierge will confirm shortly.")
             return redirect('my_reservations')
     else:
+=======
+            messages.success(request, f"Table reservation requested for {reservation.guest_name}! Our concierge will confirm shortly.")
+            return redirect('my_reservations')
+    else:
+        # Prepopulate with user details
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         form = ReservationForm(initial={
             'guest_name': f"{request.user.first_name} {request.user.last_name}".strip() or request.user.username,
             'guest_email': request.user.email,
             'guest_count': 2,
+<<<<<<< HEAD
             'reservation_date': (timezone.now() + timezone.timedelta(days=1)).strftime('%Y-%m-%d'),
+=======
+            'reservation_date': (datetime.datetime.utcnow() + datetime.timedelta(days=1)).strftime('%Y-%m-%d'),
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         })
 
     return render(request, 'items/reservation_form.html', {
@@ -677,7 +851,11 @@ def manage_reservations(request):
     reservations = Reservation.objects.all().order_by('-created_at')
     if status_filter:
         reservations = reservations.filter(status=status_filter)
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     return render(request, 'items/manage_reservations.html', {
         'reservations': reservations,
         'status_filter': status_filter,
@@ -692,7 +870,15 @@ def update_reservation_status(request, reservation_id):
         form = ReservationStatusForm(request.POST)
         if form.is_valid():
             reservation.status = form.cleaned_data['status']
+<<<<<<< HEAD
             reservation.updated_at = timezone.now()
             reservation.save()
             messages.success(request, f"Reservation #{reservation.id} status updated to {reservation.status}.")
     return redirect('manage_reservations')
+=======
+            reservation.updated_at = datetime.datetime.utcnow()
+            reservation.save()
+            messages.success(request, f"Reservation #{reservation.id} status updated to {reservation.status}.")
+    return redirect('manage_reservations')
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa

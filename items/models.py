@@ -11,10 +11,13 @@ from mongoengine import (
 )
 
 
+<<<<<<< HEAD
 def get_utc_now():
     return datetime.datetime.now(datetime.timezone.utc)
 
 
+=======
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 class Item(Document):
     CATEGORY_CHOICES = (
         'Signature Karahi & Handi',
@@ -36,13 +39,21 @@ class Item(Document):
 
     image = ImageField(required=False)
 
+<<<<<<< HEAD
     created_at = DateTimeField(default=get_utc_now)
     updated_at = DateTimeField(default=get_utc_now)
+=======
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+    updated_at = DateTimeField(default=datetime.datetime.utcnow)
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 
     meta = {
         'collection': 'items',
         'ordering': ['-created_at'],
+<<<<<<< HEAD
         'indexes': ['category'],
+=======
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     }
 
     def __str__(self):
@@ -56,8 +67,13 @@ class Item(Document):
     def discounted_price(self):
         if not self.is_on_sale:
             return self.price
+<<<<<<< HEAD
         price = Decimal(str(self.price))
         pct = Decimal(str(self.discount_percent))
+=======
+        price = Decimal(self.price)
+        pct = Decimal(self.discount_percent)
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
         discounted = price - (price * pct / Decimal(100))
         return discounted.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
@@ -65,7 +81,11 @@ class Item(Document):
     def savings_amount(self):
         if not self.is_on_sale:
             return Decimal('0.00')
+<<<<<<< HEAD
         return (Decimal(str(self.price)) - self.discounted_price).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+=======
+        return (Decimal(self.price) - self.discounted_price).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 
     @property
     def in_stock(self):
@@ -107,6 +127,7 @@ class CartItem(EmbeddedDocument):
 
 
 class Cart(Document):
+<<<<<<< HEAD
     # Django's auth User lives in SQL, so we key the cart on its integer id
     # rather than a MongoEngine ReferenceField.
     user_id = IntField(required=True, unique=True)
@@ -116,6 +137,16 @@ class Cart(Document):
     meta = {
         'collection': 'carts',
         'indexes': ['user_id'],
+=======
+    # Django's auth User lives in SQLite, so we key the cart on its integer id
+    # rather than a MongoEngine ReferenceField (which only works across Mongo docs).
+    user_id = IntField(required=True, unique=True)
+    items = EmbeddedDocumentListField(CartItem)
+    updated_at = DateTimeField(default=datetime.datetime.utcnow)
+
+    meta = {
+        'collection': 'carts',
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     }
 
     def total_quantity(self):
@@ -134,7 +165,11 @@ class OrderItem(EmbeddedDocument):
 
     @property
     def line_total(self):
+<<<<<<< HEAD
         return (Decimal(str(self.unit_price)) * self.quantity).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+=======
+        return (Decimal(self.unit_price) * self.quantity).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 
 
 class Order(Document):
@@ -157,13 +192,21 @@ class Order(Document):
 
     status = StringField(choices=STATUS_CHOICES, default='Pending')
 
+<<<<<<< HEAD
     created_at = DateTimeField(default=get_utc_now)
     updated_at = DateTimeField(default=get_utc_now)
+=======
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+    updated_at = DateTimeField(default=datetime.datetime.utcnow)
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 
     meta = {
         'collection': 'orders',
         'ordering': ['-created_at'],
+<<<<<<< HEAD
         'indexes': ['user_id', 'status'],
+=======
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
     }
 
     def __str__(self):
@@ -204,14 +247,27 @@ class Reservation(Document):
 
     status = StringField(choices=STATUS_CHOICES, default='Pending')
 
+<<<<<<< HEAD
     created_at = DateTimeField(default=get_utc_now)
     updated_at = DateTimeField(default=get_utc_now)
+=======
+    created_at = DateTimeField(default=datetime.datetime.utcnow)
+    updated_at = DateTimeField(default=datetime.datetime.utcnow)
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
 
     meta = {
         'collection': 'reservations',
         'ordering': ['-created_at'],
+<<<<<<< HEAD
         'indexes': ['user_id', 'status', 'reservation_date'],
     }
 
     def __str__(self):
         return f"Reservation #{self.id} — {self.guest_name} ({self.table_type}, {self.reservation_date})"
+=======
+    }
+
+    def __str__(self):
+        return f"Reservation #{self.id} — {self.guest_name} ({self.table_type}, {self.reservation_date})"
+
+>>>>>>> 2feabb2fe60d8c581b15980d33e09e7979fca5aa
