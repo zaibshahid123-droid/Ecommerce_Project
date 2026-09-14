@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # Third-party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 
     # Local apps
     'items',
@@ -58,6 +59,7 @@ AUTHENTICATION_BACKENDS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,6 +69,13 @@ MIDDLEWARE = [
     'items.middleware.AgeRestrictionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# CORS — set your actual frontend origin(s) via env var in production
+CORS_ALLOWED_ORIGINS = os.getenv(
+    'CORS_ALLOWED_ORIGINS',
+    'http://localhost:3000,http://127.0.0.1:3000'
+).split(',')
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'mongo_crud_project.urls'
 
@@ -116,7 +125,11 @@ else:
 # ---------------------------------------------------------------------------
 MONGO_URI = os.getenv('MONGO_URI')
 if MONGO_URI:
-    mongoengine.connect(host=MONGO_URI)
+    try:
+        mongoengine.connect(host=MONGO_URI, serverSelectionTimeoutMS=5000)
+    except Exception as e:
+        # Don't crash the whole app on cold start if Atlas is briefly unreachable
+        print(f"MongoDB connection error: {e}")
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
